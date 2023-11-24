@@ -9,4 +9,8 @@ class PinjamPengembalianController extends Controller
     public function index() {
         return view('pages.pinjam-pengembalian.pinjam-pengembalian-view');
     }
+
+    public function form() {
+        return view('pages.pinjam-pengembalian.form');
+    }
 }

@@ -9,19 +9,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Pinjam & Pengembalian | MechLabInventory</title>
+    <title>Form Pinjam &amp; Pengembalian | MechLabInventory</title>
 
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -200,11 +200,11 @@
                     <div class="d-flex justify-content-between">
                         <h1 class="h3 mb-4 text-gray-800">Pinjam &amp; Pengembalian</h1>
                         <div>
-                            <a href="/pinjam-pengembalian/form" class="btn btn-primary btn-icon-split">
+                            <a href="/pinjam-pengembalian" class="btn btn-danger btn-icon-split">
                                 <span class="icon text-white-50">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
                                 </span>
-                                <span class="text">Pinjam</span>
+                                <span class="text">Kembali</span>
                             </a>
                         </div>
                     </div>
@@ -212,59 +212,29 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Table Pinjam & Pengembalian</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Pinjam &amp; Pengembalian</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Kode Unik</th>
-                                            <th>Nama Peminjam</th>
-                                            <th>Tgl. Pinjam</th>
-                                            <th>Tgl. Pengembalian</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Kode Unik</th>
-                                            <th>Nama Peminjam</th>
-                                            <th>Tgl. Pinjam</th>
-                                            <th>Tgl. Pengembalian</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>1a2b3c4d</td>
-                                            <td>Muhammad Arif Rizqy Fachrudin</td>
-                                            <td>12 Dec 2023</td>
-                                            <td>19 Dec 2023</td>
-                                            <td>
-                                                <a href="#" class="btn btn-sm btn-info btn-icon-split">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fa fa-info" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="text">Detail</span>
-                                                </a>
-                                                <a href="#" class="btn btn-sm btn-warning">
-                                                    <span class="text">Ubah</span>
-                                                </a>
-                                                <a href="#" class="btn btn-sm btn-danger btn-icon-split">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="text">Hapus</span>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <form method="post">
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label for="nim" class="form-label">NIM</label>
+                                        <input type="text" class="form-control" id="nim">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="text">Simpan</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -316,21 +286,21 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
 
 </body>
 

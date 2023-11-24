@@ -36,6 +36,7 @@ Route::get('/login', function () {
 
 Route::controller(PinjamPengembalianController::class)->group(function () {
     Route::get('/pinjam-pengembalian', 'index');
+    Route::get('/pinjam-pengembalian/form', 'form');
 });
 
 Route::resource('items', LabItemsController::class);
