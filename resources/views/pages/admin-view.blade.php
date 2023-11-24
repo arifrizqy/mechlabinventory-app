@@ -197,7 +197,17 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Admin List</h1>
+                    <div class="d-flex justify-content-between">
+                        <h1 class="h3 mb-4 text-gray-800">Admin List</h1>
+                        <div>
+                            <a href="#" class="btn btn-primary btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </span>
+                                <span class="text">Tambah Admin</span>
+                            </a>
+                        </div>
+                    </div>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
