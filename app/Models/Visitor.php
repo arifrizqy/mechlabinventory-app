@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LabItems extends Model
+class Visitor extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_lab_items';
+    protected $table = 'tb_visitors';
 
-    protected $fillabel = [
-        "item_id", "description"
+    protected $fillable = [
+        'id', 'name', 'telp'
     ];
 }

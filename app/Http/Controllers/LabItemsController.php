@@ -13,7 +13,9 @@ class LabItemsController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.item.item-view', [
+            'items' => LabItems::where('isDeleted', 0)->get()
+        ]);
     }
 
     /**
