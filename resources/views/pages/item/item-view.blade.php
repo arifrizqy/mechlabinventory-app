@@ -232,11 +232,17 @@
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
+
                                     <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @foreach ($items as $itm )
+
                                         <tr>
-                                            <td>1</td>
-                                            <td>CT</td>
-                                            <td>Crimping Tool</td>
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $itm->item_id }}</td>
+                                            <td>{{ $itm->description }}</td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>
@@ -249,6 +255,7 @@
                                                 </a>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

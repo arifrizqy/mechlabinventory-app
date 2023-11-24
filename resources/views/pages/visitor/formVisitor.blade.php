@@ -9,19 +9,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Visitors | MechLabInventory</title>
+    <title>List Admin | MechLabInventory</title>
 
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href={{  asset("vendor/fontawesome-free/css/all.min.css") }} rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href={{ asset('css/sb-admin-2.min.css') }} rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href={{  asset("vendor/datatables/dataTables.bootstrap4.min.css") }} rel="stylesheet">
 
 </head>
 
@@ -57,7 +57,7 @@
                 Master Data
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Nav Item - Master Data -->
             <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
@@ -67,8 +67,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Master Data:</h6>
-                        <a class="collapse-item" href="/admin-list">Admin List</a>
-                        <a class="collapse-item active" href="/visitors">Visitors</a>
+                        <a class="collapse-item active" href="/admin-list">Admin List</a>
+                        <a class="collapse-item" href="/visitors">Visitors</a>
                         <a class="collapse-item" href="/items">Item</a>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">MechLab Admin</span>
                                 <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                    src={{  asset("img/undraw_profile.svg") }}>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -198,13 +198,13 @@
 
                     <!-- Page Heading -->
                     <div class="d-flex justify-content-between">
-                        <h1 class="h3 mb-4 text-gray-800">Visitors</h1>
+                        <h1 class="h3 mb-4 text-gray-800">Tambah Visitor</h1>
                         <div>
-                            <a href="visitors/create" class="btn btn-primary btn-icon-split">
+                            <a href="/visitors" class="btn btn-danger btn-icon-split">
                                 <span class="icon text-white-50">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
                                 </span>
-                                <span class="text">Tambah Visitor</span>
+                                <span class="text">Kembali</span>
                             </a>
                         </div>
                     </div>
@@ -212,62 +212,35 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Visitor Table</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Tambah Visitor</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>NIM</th>
-                                            <th>Nama Lengkap</th>
-                                            <th>Nomor Telephone</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>NIM</th>
-                                            <th>Nama Lengkap</th>
-                                            <th>Nomor Telephone</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @foreach ($visitor as $vst )
+                            <form method="post" action="{{ route('visitors.store') }}">
 
-
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $vst->id }}</td>
-                                            <td>{{ $vst->name }}</td>
-                                            <td>{{ $vst->telp }}</td>
-                                            <td>
-                                                <a href="#" class="btn btn-sm btn-warning">
-                                                    <span class="text">Ubah</span>
-                                                </a>
-                                                <form action="{{ route('visitors.update', $vst->id) }}" method="post">
-                                                    @method('put')
-                                                    @csrf
-                                                    <input type="number" name="id" value="{{ $vst->id }}" class="d-none">
-                                                    <button  class="btn btn-sm btn-danger btn-icon-split">
-                                                        <span class="icon text-white-50">
-                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                        </span>
-                                                        <span class="text">Hapus</span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                @csrf
+                                <div class="row mb-3">
+                                    <div class="col-4">
+                                        <label for="nim" class="form-label">NIM</label>
+                                        <input type="number" class="form-control" oninput="checkLength(this)" name="id" id="nim" maxlength="12">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="nama" class="form-label">Nama Lengkap</label>
+                                        <input type="text" class="form-control" name="name" id="nama">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="telp" class="form-label">No Telepon / WhatsApp </label>
+                                        <input type="number" class="form-control" oninput="checkLengthTlp(this)" name="telp" id="telp" maxlength="13">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="text">Simpan</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -318,22 +291,38 @@
         </div>
     </div>
 
+
+    <script>
+        function checkLength(input) {
+            if (input.value.length > 12) {
+                input.value = input.value.slice(0, 12);
+            }
+        }
+        function checkLengthTlp(input) {
+            if (input.value.length > 13) {
+                input.value = input.value.slice(0, 13);
+            }
+        }
+
+
+
+    </script>
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src={{  asset("vendor/jquery/jquery.min.js") }}></script>
+    <script src={{ ("vendor/bootstrap/js/bootstrap.bundle. asset.js") }}></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src={{  asset("vendor/jquery-easing/jquery.easing.min.js") }}></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src={{  asset("js/sb-admin-2.min.js") }}></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src={{  asset("vendor/datatables/jquery.dataTables.min.js") }}></script>
+    <script src={{  asset("vendor/datatables/dataTables.bootstrap4.min.js") }}></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <script src={{  asset("js/demo/datatables-demo.js") }}></script>
 
 </body>
 
