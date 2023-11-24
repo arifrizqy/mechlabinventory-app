@@ -22,6 +22,10 @@ Route::controller(UserAdminController::class)->group(function () {
     Route::get('/admin-list', 'index');
 });
 
+Route::get('/login', function () {
+    return view('pages.login');
+});
+
 // Route::controller(VisitorController::class)->group(function () {
 //     Route::get('/visitors', 'index');
 // });
