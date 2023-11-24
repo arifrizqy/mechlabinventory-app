@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(UserAdminController::class)->group(function () {
-    Route::get('/admin-list', 'index');
+    Route::get('/admin-list', 'storeData');
 });
 
 Route::controller(VisitorController::class)->group(function () {
