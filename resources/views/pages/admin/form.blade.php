@@ -200,7 +200,7 @@
                     <div class="d-flex justify-content-between">
                         <h1 class="h3 mb-4 text-gray-800">Tambah Admin</h1>
                         <div>
-                            <a href="#" class="btn btn-danger btn-icon-split">
+                            <a href="/admin-list" class="btn btn-danger btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                                 </span>
