@@ -4,7 +4,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PinjamPengembalianController;
 use App\Http\Controllers\UserAdminController;
 use App\Http\Controllers\VisitorController;
-use App\Http\Controllers\LabItemsController;
+use App\Http\Controllers\ItemsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +34,6 @@ Route::controller(PinjamPengembalianController::class)->group(function () {
     Route::get('/pinjam-pengembalian', 'index');
 });
 
-Route::resource('items', LabItemsController::class);
+Route::resource('items',ItemsController::class);
 
 Route::resource('visitors', VisitorController::class);
