@@ -30,10 +30,7 @@ Route::controller(UserAdminController::class)->group(function () {
 //     Route::get('/items', 'index');
 // });
 
-Route::controller(PinjamPengembalianController::class)->group(function () {
-    Route::get('/pinjam-pengembalian', 'index');
-});
-
+Route::resource('/pinjam-pengembalian', PinjamPengembalianController::class);
 Route::resource('items',ItemsController::class);
 
 Route::resource('visitors', VisitorController::class);

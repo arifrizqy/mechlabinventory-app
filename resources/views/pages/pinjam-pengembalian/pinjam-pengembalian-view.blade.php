@@ -200,7 +200,7 @@
                     <div class="d-flex justify-content-between">
                         <h1 class="h3 mb-4 text-gray-800">Peminjaman &amp; Pengembalian</h1>
                         <div>
-                            <a href="#" class="btn btn-primary btn-icon-split">
+                            <a href="/pinjam-pengembalian/create" class="btn btn-primary btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </span>
@@ -220,30 +220,34 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Kode Unik</th>
                                             <th>Nama Peminjam</th>
+                                            <th>Nama Barang</th>
+                                            <th>Status</th>
                                             <th>Tgl. Pinjam</th>
-                                            <th>Tgl. Pengembalian</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Kode Unik</th>
                                             <th>Nama Peminjam</th>
+                                            <th>Nama Barang</th>
+                                            <th>Status</th>
                                             <th>Tgl. Pinjam</th>
-                                            <th>Tgl. Pengembalian</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @foreach ($pinjam as $pjm )
                                         <tr>
-                                            <td>1</td>
-                                            <td>1a2b3c4d</td>
-                                            <td>Muhammad Arif Rizqy Fachrudin</td>
-                                            <td>12 Dec 2023</td>
-                                            <td>19 Dec 2023</td>
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $pjm->visitor->name }}</td>
+                                            <td>{{ $pjm->item->description }}</td>
+                                            <td>{{ $pjm->status === 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}</td>
+                                            <td>{{ $pjm->created_at}}</td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-info btn-icon-split">
                                                     <span class="icon text-white-50">
@@ -262,6 +266,8 @@
                                                 </a>
                                             </td>
                                         </tr>
+
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

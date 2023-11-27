@@ -12,6 +12,6 @@ class Item extends Model
     protected $table = 'tb_lab_items';
 
     protected $fillable = [
-        'item_id', "description", 'isDeleted'
+        'id', "description", 'isDeleted'
     ];
 }
