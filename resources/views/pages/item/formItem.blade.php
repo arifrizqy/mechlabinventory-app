@@ -198,9 +198,9 @@
 
                     <!-- Page Heading -->
                     <div class="d-flex justify-content-between">
-                        <h1 class="h3 mb-4 text-gray-800">Tambah Visitor</h1>
+                        <h1 class="h3 mb-4 text-gray-800">Tambah Item</h1>
                         <div>
-                            <a href="/visitors" class="btn btn-danger btn-icon-split">
+                            <a href="/items" class="btn btn-danger btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                                 </span>
@@ -212,25 +212,22 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Form Tambah Visitor</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Tambah Item</h6>
                         </div>
                         <div class="card-body">
-                            <form method="post" action="{{ route('visitors.store') }}">
+                            <form method="post" action="{{ route('items.store') }}">
 
                                 @csrf
-                                <div class="row mb-3">
-                                    <div class="col-4">
-                                        <label for="nim" class="form-label">NIM</label>
-                                        <input type="number" class="form-control" oninput="checkLength(this)" name="id  " id="nim" maxlength="12">
+                                <div class="row mb-6">
+                                    <div class="col-6">
+                                        <label for="Code" class="form-label">Code</label>
+                                        <input type="text" class="form-control" oninput="checkLength(this)" name="item_id" id="Code" maxlength="12">
                                     </div>
-                                    <div class="col-4">
-                                        <label for="nama" class="form-label">Nama Lengkap</label>
-                                        <input type="text" class="form-control" name="name" id="nama">
+                                    <div class="col-6">
+                                        <label for="nama" class="form-label">Nama barang</label>
+                                        <input type="text" class="form-control" name="description" id="nama">
                                     </div>
-                                    <div class="col-4">
-                                        <label for="telp" class="form-label">No Telepon / WhatsApp </label>
-                                        <input type="number" class="form-control" oninput="checkLengthTlp(this)" name="telp" id="telp" maxlength="13">
-                                    </div>
+
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-sm btn-primary btn-icon-split">
@@ -296,11 +293,6 @@
         function checkLength(input) {
             if (input.value.length > 12) {
                 input.value = input.value.slice(0, 12);
-            }
-        }
-        function checkLengthTlp(input) {
-            if (input.value.length > 13) {
-                input.value = input.value.slice(0, 13);
             }
         }
 

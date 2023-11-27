@@ -199,7 +199,7 @@
                     <div class="d-flex justify-content-between">
                         <h1 class="h3 mb-4 text-gray-800">Items</h1>
                         <div>
-                            <a href="#" class="btn btn-primary btn-icon-split">
+                            <a href="/items/create" class="btn btn-primary btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </span>
@@ -247,12 +247,17 @@
                                                 <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>
                                                 </a>
-                                                <a href="#" class="btn btn-sm btn-danger btn-icon-split">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="text">Hapus</span>
-                                                </a>
+                                                <form action="{{ route('items.update', $itm->item_id) }}" method="post">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button  class="btn btn-sm btn-danger btn-icon-split">
+                                                        <input type="number" name="id" value="{{ $itm->item_id }}" class="d-none">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </span>
+                                                        <span class="text">Hapus</span>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @endforeach

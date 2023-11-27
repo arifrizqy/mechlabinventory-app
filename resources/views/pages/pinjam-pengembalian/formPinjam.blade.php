@@ -200,7 +200,7 @@
                     <div class="d-flex justify-content-between">
                         <h1 class="h3 mb-4 text-gray-800">Tambah Visitor</h1>
                         <div>
-                            <a href="/visitors" class="btn btn-danger btn-icon-split">
+                            <a href="/pinjam-pengembalian" class="btn btn-danger btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fa fa-arrow-left" aria-hidden="true"></i>
                                 </span>
@@ -215,22 +215,29 @@
                             <h6 class="m-0 font-weight-bold text-primary">Form Tambah Visitor</h6>
                         </div>
                         <div class="card-body">
-                            <form method="post" action="{{ route('visitors.store') }}">
+                            <form method="post" action="{{ route('pinjam-pengembalian.store') }}">
 
                                 @csrf
                                 <div class="row mb-3">
-                                    <div class="col-4">
-                                        <label for="nim" class="form-label">NIM</label>
-                                        <input type="number" class="form-control" oninput="checkLength(this)" name="id  " id="nim" maxlength="12">
+                                    <div class="col-6">
+                                        <label for="visitor" class="form-label">Nama Peminjam</label><br>
+                                        <select class="form-select"  name="nim">
+                                            <option >Open this select menu</option>
+                                            @foreach ($visitor as $vst )
+
+                                            <option value="{{ $vst->id }}">{{ $vst->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-                                    <div class="col-4">
-                                        <label for="nama" class="form-label">Nama Lengkap</label>
-                                        <input type="text" class="form-control" name="name" id="nama">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="telp" class="form-label">No Telepon / WhatsApp </label>
-                                        <input type="number" class="form-control" oninput="checkLengthTlp(this)" name="telp" id="telp" maxlength="13">
-                                    </div>
+                                    <div class="col-6">
+                                        <label for="nama" class="form-label">Nama Barang</label><br>
+                                        <select class="form-select"  name="item_id">
+                                            <option >Open this select menu</option>
+                                            @foreach ($item as $item)
+                                                <option value="{{$item->item_id }}">{{ $item->item_id }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>s
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-sm btn-primary btn-icon-split">
