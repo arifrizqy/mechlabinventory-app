@@ -70,9 +70,11 @@ class PinjamPengembalianController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PostPinjam $postPinjam)
+    public function update(Request $request, PostPinjam $postPinjam, $id)
     {
-        //
+        $status['status'] = 1;
+        PostPinjam::where('id', $id)->update($status);
+        return redirect('/pinjam-pengembalian');
     }
 
     /**

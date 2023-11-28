@@ -37,9 +37,22 @@ class VisitorController extends Controller
             'telp' => 'required',
         ]);
 
-        $validated['isDeleted'] = 0;
+        $visitor = Visitor::firstOrNew(['id' => $validated['id']]);
 
-        Visitor::create($validated);
+        if($visitor->exists){
+            $visitor->id= $validated['id'];
+            $visitor->name= $validated['name'];
+            $visitor->telp= $validated['telp'];
+            $visitor->isDeleted = 0;
+            $visitor->save();
+        }else{
+            Visitor::create([
+                'id' => $validated['id'],
+                'name' => $validated['name'],
+                'telp' => $validated['telp'],
+                'isDeleted' => 0,
+            ]);
+        }
 
         return redirect('/visitors');
 
@@ -66,17 +79,17 @@ class VisitorController extends Controller
      */
     public function update(Request $request, Visitor $visitor)
     {
-        $deleted['isDeleted'] = 1;
-        $id= $request->input('id');
-        Visitor::where('id',$id)->update($deleted);
-        return redirect('/visitors');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Visitor $visitor)
+    public function destroy($id)
     {
+        $deleted['isDeleted'] = 1;
+        Visitor::where('id',$id)->update($deleted);
 
+        return redirect('/visitors');
     }
 }

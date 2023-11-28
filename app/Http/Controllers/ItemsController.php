@@ -30,24 +30,32 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'id' => 'required',
             'description' => 'required',
-
         ]);
-        $validated['code_item'] = $request->input('id');
-        $validated['isDeleted'] = 0;
-        $validated['isBorrowed'] = 0;
 
+        $item = Item::firstOrNew(['id' => $validated['id']]);
 
-        Item::create([
-            'id' => $validated['id'],
-            'description' => $validated['description'],
-            'code_item' => $validated['code_item'],
-            'isDeleted' => $validated['isDeleted'],
-            'isBorrowed' => $validated['isBorrowed'],
+        // Cek apakah item dengan ID yang diberikan sudah ada dalam database
+        if ($item->exists) {
+            $item->description = $validated['description'];
+            $item->code_item = $request->input('id');
+            $item->isDeleted = 0;
+            $item->isBorrowed = 0;
+            $item->save();
+        } else {
+            // Jika item tidak ditemukan, buat item baru
+            Item::create([
+                'id' => $validated['id'],
+                'description' => $validated['description'],
+                'code_item' => $validated['id'],
+                'isDeleted' => 0,
+                'isBorrowed' => 0,
+            ]);
+        }
 
-        ]);
         return redirect('/items');
     }
 

@@ -248,8 +248,8 @@
                                             <td>{{ $vst->name }}</td>
                                             <td>{{ $vst->telp }}</td>
                                             <td>
-                                                <form action="{{ route('visitors.update', $vst->id) }}" method="post">
-                                                    @method('put')
+                                                <form action="{{ route('visitors.destroy', $vst->id) }}" method="post">
+                                                    @method('delete')
                                                     @csrf
                                                     <a href="#" class="btn btn-sm btn-warning">
                                                         <span class="text">Ubah</span>

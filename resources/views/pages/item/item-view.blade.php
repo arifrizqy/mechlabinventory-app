@@ -256,7 +256,7 @@
                                                 <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>
                                                 </a>
-                                                <form action="{{ route('items.destroy', $itm->code_item) }}" method="post">
+                                                <form class="mt-1" action="{{ route('items.destroy', $itm->code_item) }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     {{-- <input type="number" name="id" value="{{ $itm->code_item }}" class="d-none"> --}}
