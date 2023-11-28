@@ -224,7 +224,7 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password" name="pass">
+                                        <input type="password" class="form-control" id="password" name="password">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
@@ -280,7 +280,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="/logout">Logout</a>
                 </div>
             </div>
         </div>

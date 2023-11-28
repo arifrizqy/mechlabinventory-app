@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -30,15 +31,13 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'username' => 'required',
-        //     'pass' => 'required',
-        // ]);
-        // DD($validated);
-        Admin::create([
-            'username' => $request->input('username'),
-            'pass' => $request->input('pass'),
+        $validated = $request->validate([
+            'username' => 'required',
+            'password' => 'required',
         ]);
+        $validated['password'] = Hash::make( $validated['password']);
+        // dd($validated);
+        Admin::create($validated);
 
         return redirect('/admin-list');
     }
@@ -69,13 +68,13 @@ class AdminController extends Controller
         $update = $request->validate([
             'id' => 'required',
             'username' => 'required',
-            'pass' => 'required',
+            'password' => 'required',
         ]);
 
         $admin = Admin::where(['id' => $update['id']])->first();
 
         $admin->username = $update['username'];
-        $admin->pass = $update['pass'];
+        $admin->password = $update['password'];
         $admin->save();
 
         return redirect('/admin-list');
@@ -87,8 +86,8 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $deleted['isDeleted'] = 1;
-        Admin::where('id',$id)->update($deleted);
+        // $deleted['isDeleted'] = 1;
+        Admin::where('id',$id)->delete();
         return redirect('/admin-list');
     }
 }

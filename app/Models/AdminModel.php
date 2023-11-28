@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class AdminModel extends Authenticatable
 {
     use HasFactory;
 
     protected $table = 'tb_admin';
     protected $guarded = 'id';
-    protected $fillable = [
-        'username', 'password', 'isDeleted'
-    ];
+
+    protected $guard = 'admin';
+
 }
