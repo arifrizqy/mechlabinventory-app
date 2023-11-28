@@ -82,4 +82,8 @@ class PinjamPengembalianController extends Controller
     {
         //
     }
+
+    public function form() {
+        return view('pages.pinjam-pengembalian.form');
+    }
 }
