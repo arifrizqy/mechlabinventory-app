@@ -15,7 +15,7 @@ class PinjamPengembalianController extends Controller
     public function index()
     {
         return view('pages.pinjam-pengembalian.pinjam-pengembalian-view',[
-            'pinjam' => PostPinjam::Where('IsDeleted', 0)->get()
+            'pinjam' => PostPinjam::Where('IsDeleted', 0)->latest()->get()
 
         ]);
     }
@@ -27,7 +27,7 @@ class PinjamPengembalianController extends Controller
     {
         return view('pages.pinjam-pengembalian.formPinjam',[
             'visitor' => Visitor::Where('IsDeleted', 0)->get(),
-            'item ' => Item::Where('IsDeleted', 0)->get()
+            'pinjam' => Item::where('isDeleted', 0)->where('isBorrowed', 0)->latest()->get()
         ]);
     }
 
@@ -36,16 +36,17 @@ class PinjamPengembalianController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nim' => 'required',
-            'item_id' => 'required',
+        // $validated = $request->validate([
+        //     'nim' => 'required',
+        // ]);
 
-        ]);
-
+        $validated['nim'] = $request->input('nim');
+        $validated['item_id'] = $request->input('barang');
         $validated['status'] = 0;
         $validated['isDeleted'] = 0;
 
         PostPinjam::create($validated);
+        Item::where('code_item', $validated['item_id'])->update(['isBorrowed' => 1]);
 
         return redirect('/pinjam-pengembalian');
     }

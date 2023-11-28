@@ -221,7 +221,7 @@
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <label for="visitor" class="form-label">Nama Peminjam</label><br>
-                                        <select class="form-select"  name="nim">
+                                        <select class="form-select" id="visitor" name="nim">
                                             <option >Open this select menu</option>
                                             @foreach ($visitor as $vst )
 
@@ -230,14 +230,14 @@
                                         </select>
                                     </div>
                                     <div class="col-6">
-                                        <label for="nama" class="form-label">Nama Barang</label><br>
-                                        <select class="form-select"  name="item_id">
+                                        <label for="namaBarang" class="form-label">Nama Barang</label><br>
+                                        <select class="form-select" id="namaBarang" name="barang">
                                             <option >Open this select menu</option>
-                                            @foreach ($item as $item)
-                                                <option value="{{$item->item_id }}">{{ $item->item_id }}</option>
+                                            @foreach ($pinjam as $pjm)
+                                                <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
                                             @endforeach
                                         </select>
-                                    </div>s
+                                    </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-sm btn-primary btn-icon-split">

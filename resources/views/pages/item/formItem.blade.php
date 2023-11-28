@@ -221,7 +221,7 @@
                                 <div class="row mb-6">
                                     <div class="col-6">
                                         <label for="Code" class="form-label">Code</label>
-                                        <input type="text" class="form-control" oninput="checkLength(this)" name="item_id" id="Code" maxlength="12">
+                                        <input type="text" class="form-control" oninput="checkLength(this)" name="id" id="Code" maxlength="12">
                                     </div>
                                     <div class="col-6">
                                         <label for="nama" class="form-label">Nama barang</label>

@@ -13,7 +13,7 @@ class VisitorController extends Controller
     public function index()
     {
         return view('pages.visitor.visitor-view', [
-            'visitor' => Visitor::where('isDeleted', 0)->get()
+            'visitor' => Visitor::where('isDeleted', 0)->latest()->get()
         ]);
     }
 
@@ -30,6 +30,7 @@ class VisitorController extends Controller
      */
     public function store(Request $request)
     {
+        // DD($request);
         $validated = $request->validate([
             'id' => 'required',
             'name' => 'required',
@@ -38,7 +39,6 @@ class VisitorController extends Controller
 
         $validated['isDeleted'] = 0;
 
-        // var_dump($validated);
         Visitor::create($validated);
 
         return redirect('/visitors');

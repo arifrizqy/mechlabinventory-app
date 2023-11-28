@@ -5,13 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Item extends Model
+class LabItem extends Model
 {
     use HasFactory;
 
     protected $table = 'tb_lab_items';
 
-    protected $fillable = [
-        'id','code_item', 'description', 'isDeleted', 'isBorrowed'
-    ];
+    protected $guarded = 'id';
 }

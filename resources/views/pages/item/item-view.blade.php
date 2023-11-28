@@ -221,6 +221,7 @@
                                             <th>No.</th>
                                             <th>Kode Item</th>
                                             <th>Nama Item</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -229,6 +230,7 @@
                                             <th>No.</th>
                                             <th>Kode Item</th>
                                             <th>Nama Item</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
@@ -241,17 +243,18 @@
 
                                         <tr>
                                             <td>{{ $i++ }}</td>
-                                            <td>{{ $itm->item_id }}</td>
+                                            <td>{{ $itm->code_item }}</td>
                                             <td>{{ $itm->description }}</td>
+                                            <td>{{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}</td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>
                                                 </a>
-                                                <form action="{{ route('items.update', $itm->item_id) }}" method="post">
+                                                <form action="{{ route('items.update', $itm->code_item) }}" method="post">
                                                     @method('put')
                                                     @csrf
                                                     <button  class="btn btn-sm btn-danger btn-icon-split">
-                                                        <input type="number" name="id" value="{{ $itm->item_id }}" class="d-none">
+                                                        <input type="number" name="id" value="{{ $itm->code_item }}" class="d-none">
                                                         <span class="icon text-white-50">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </span>
