@@ -58,7 +58,7 @@
             </div>
 
             <!-- Nav Item - Master Data -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fa fa-database" aria-hidden="true"></i>
@@ -67,7 +67,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Master Data:</h6>
-                        <a class="collapse-item active" href="/admin-list">Admin List</a>
+                        <a class="collapse-item" href="/admin-list">Admin List</a>
                         <a class="collapse-item" href="/visitors">Visitors</a>
                         <a class="collapse-item" href="/items">Item</a>
                     </div>
@@ -78,7 +78,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Peminjaman & Pengembalian -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/pinjam-pengembalian">
                     {{-- <i class="fas fa-fw fa-tachometer-alt"></i> --}}
                     <span>Pinjam &amp; Pengembalian</span>
@@ -212,7 +212,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Form Tambah Visitor</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Pinjam</h6>
                         </div>
                         <div class="card-body">
                             <form method="post" action="{{ route('pinjam-pengembalian.store') }}">
@@ -221,20 +221,19 @@
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <label for="visitor" class="form-label">Nama Peminjam</label><br>
-                                        <select class="form-select" id="visitor" name="nim">
+                                        <select class="custom-select" id="visitor" name="nim">
                                             <option >Open this select menu</option>
-                                            @foreach ($visitor as $vst )
-
+                                            @foreach ($visitor as $vst)
                                             <option value="{{ $vst->id }}">{{ $vst->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-6">
                                         <label for="namaBarang" class="form-label">Nama Barang</label><br>
-                                        <select class="form-select" id="namaBarang" name="barang">
+                                        <select class="custom-select" id="namaBarang" name="barang">
                                             <option >Open this select menu</option>
                                             @foreach ($pinjam as $pjm)
-                                                <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
+                                            <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
                                             @endforeach
                                         </select>
                                     </div>

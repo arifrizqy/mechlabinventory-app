@@ -315,13 +315,60 @@
 
     {{-- Modal --}}
     <div class="modal fade" id="modalDetail" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Detail Peminjaman</h5>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="d-flex">
+                        <img class="rounded shadow-sm" src="{{ asset('img/image-not-available.png') }}" alt="Image not available">
+                        <div class="w-100">
+                            <div class="d-flex">
+                                <div class="w-100 ml-3">
+                                    <div class="row">
+                                        <div class="col-3">NIM</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">220441100015</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Nama</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">Muhammad Arif Rizqy Fachrudin</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">No. Telp.</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">085156543083</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Status</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">
+                                            <div class="badge py-2 px-4 bg-success">
+                                                <span class="text-white">Sudah dikembalikan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Tgl. Pinjam</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">23-Desember-2023</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Barang</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-6">Kode Brg.</div>
+                                                <div class="col-6">Nama Brg.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
