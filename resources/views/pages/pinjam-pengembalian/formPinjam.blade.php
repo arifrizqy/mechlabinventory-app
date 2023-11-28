@@ -12,16 +12,16 @@
     <title>List Admin | MechLabInventory</title>
 
     <!-- Custom fonts for this template -->
-    <link href={{  asset("vendor/fontawesome-free/css/all.min.css") }} rel="stylesheet" type="text/css">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href={{ asset('css/sb-admin-2.min.css') }} rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href={{  asset("vendor/datatables/dataTables.bootstrap4.min.css") }} rel="stylesheet">
+    <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -58,7 +58,7 @@
             </div>
 
             <!-- Nav Item - Master Data -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fa fa-database" aria-hidden="true"></i>
@@ -67,7 +67,7 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Master Data:</h6>
-                        <a class="collapse-item active" href="/admin-list">Admin List</a>
+                        <a class="collapse-item" href="/admin-list">Admin List</a>
                         <a class="collapse-item" href="/visitors">Visitors</a>
                         <a class="collapse-item" href="/items">Item</a>
                     </div>
@@ -78,7 +78,7 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Peminjaman & Pengembalian -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/pinjam-pengembalian">
                     {{-- <i class="fas fa-fw fa-tachometer-alt"></i> --}}
                     <span>Pinjam &amp; Pengembalian</span>
@@ -212,7 +212,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Form Tambah Visitor</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Pinjam</h6>
                         </div>
                         <div class="card-body">
                             <form method="post" action="{{ route('pinjam-pengembalian.store') }}">
@@ -221,20 +221,19 @@
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <label for="visitor" class="form-label">Nama Peminjam</label><br>
-                                        <select class="form-select" id="visitor" name="nim">
+                                        <select class="custom-select" id="visitor" name="nim">
                                             <option >Open this select menu</option>
-                                            @foreach ($visitor as $vst )
-
+                                            @foreach ($visitor as $vst)
                                             <option value="{{ $vst->id }}">{{ $vst->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-6">
                                         <label for="namaBarang" class="form-label">Nama Barang</label><br>
-                                        <select class="form-select" id="namaBarang" name="barang">
+                                        <select class="custom-select" id="namaBarang" name="barang">
                                             <option >Open this select menu</option>
                                             @foreach ($pinjam as $pjm)
-                                                <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
+                                            <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -298,7 +297,6 @@
         </div>
     </div>
 
-
     <script>
         function checkLength(input) {
             if (input.value.length > 12) {
@@ -309,27 +307,25 @@
             if (input.value.length > 13) {
                 input.value = input.value.slice(0, 13);
             }
-        }
-
-
-
+        }    
     </script>
+
     <!-- Bootstrap core JavaScript-->
-    <script src={{  asset("vendor/jquery/jquery.min.js") }}></script>
-    <script src={{ ("vendor/bootstrap/js/bootstrap.bundle. asset.js") }}></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src={{  asset("vendor/jquery-easing/jquery.easing.min.js") }}></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src={{  asset("js/sb-admin-2.min.js") }}></script>
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
 
     <!-- Page level plugins -->
-    <script src={{  asset("vendor/datatables/jquery.dataTables.min.js") }}></script>
-    <script src={{  asset("vendor/datatables/dataTables.bootstrap4.min.js") }}></script>
+    <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
     <!-- Page level custom scripts -->
-    <script src={{  asset("js/demo/datatables-demo.js") }}></script>
+    <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
 
 </body>
 

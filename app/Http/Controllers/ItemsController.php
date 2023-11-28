@@ -72,7 +72,7 @@ class ItemsController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-
+        //
     }
 
     /**
@@ -81,7 +81,7 @@ class ItemsController extends Controller
     public function destroy($id)
     {
         $deleted['isDeleted'] = 1;
-        $item = Item::where('code_item',$id);
+        $item = Item::where('code_item', $id);
         $item->update($deleted);
         return redirect('/items');
     }
