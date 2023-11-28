@@ -204,7 +204,7 @@
                                 <span class="icon text-white-50">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </span>
-                                <span class="text">Pinjam</span>
+                                <span class="text">Pinjam Barang</span>
                             </a>
                         </div>
                     </div>

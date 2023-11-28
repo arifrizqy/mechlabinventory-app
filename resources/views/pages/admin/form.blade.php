@@ -219,11 +219,11 @@
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <label for="nim" class="form-label">NIM</label>
-                                        <input type="text" class="form-control" id="nim">
+                                        <input type="text" class="form-control" id="nim" required>
                                     </div>
                                     <div class="col-6">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password">
+                                        <input type="password" class="form-control" id="password" required>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
