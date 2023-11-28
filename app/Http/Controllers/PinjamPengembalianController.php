@@ -54,9 +54,19 @@ class PinjamPengembalianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PostPinjam $postPinjam)
+    public function show(PostPinjam $postPinjam, $id)
     {
-        //
+        $dataPinjam = PostPinjam::where('id', $id)->first();
+        $dataVisitor = Visitor::where('id', $dataPinjam->nim)->first();
+        $dataItem = Item::where('code_item', $dataPinjam->item_id)->first();
+
+
+        return array(
+            'dataVisitor' => $dataVisitor,
+            'dataItemVisitor' => $dataItem,
+            'dataPinjam' => $dataPinjam,
+        );
+
     }
 
     /**
@@ -73,7 +83,10 @@ class PinjamPengembalianController extends Controller
     public function update(Request $request, PostPinjam $postPinjam, $id)
     {
         $status['status'] = 1;
-        PostPinjam::where('id', $id)->update($status);
+        $post = PostPinjam::where('id', $id)->first();
+        $post->update($status);
+
+        Item::where('code_item', $post->item_id)->update(['isBorrowed' => 0]);
         return redirect('/pinjam-pengembalian');
     }
 
@@ -82,7 +95,8 @@ class PinjamPengembalianController extends Controller
      */
     public function destroy(PostPinjam $postPinjam,$id)
     {
-        $post= PostPinjam::where('id',$id);
+        $post= PostPinjam::where('id',$id)->first();
+        Item::where('code_item', $post->item_id)->update(['isBorrowed' => 0]);
         $post->delete();
         return redirect('/pinjam-pengembalian');
     }

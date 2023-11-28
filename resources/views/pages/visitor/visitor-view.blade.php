@@ -248,12 +248,16 @@
                                             <td>{{ $vst->name }}</td>
                                             <td>{{ $vst->telp }}</td>
                                             <td>
+                                                <form action="{{ route('visitors.edit', $vst->id) }}" method="GET">
+                                                    @csrf
+                                                    <button class="btn btn-sm btn-warning">
+                                                        <span class="text">Ubah</span>
+                                                    </button>
+
+                                                </form>
                                                 <form action="{{ route('visitors.destroy', $vst->id) }}" method="post">
                                                     @method('delete')
                                                     @csrf
-                                                    <a href="#" class="btn btn-sm btn-warning">
-                                                        <span class="text">Ubah</span>
-                                                    </a>
                                                     <input type="number" name="id" value="{{ $vst->id }}" class="d-none">
                                                     <button  class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm('Are you sure?')">
                                                         <span class="icon text-white-50">

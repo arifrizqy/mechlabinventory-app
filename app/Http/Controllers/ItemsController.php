@@ -70,9 +70,11 @@ class ItemsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Item $item)
+    public function edit($id)
     {
-        //
+        return view('pages.item.formItemEdit',[
+            'item' =>Item::where('code_item', $id)->first()
+        ]);
     }
 
     /**
@@ -80,7 +82,18 @@ class ItemsController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //
+        $validated = $request->validate([
+            'id' => 'required',
+            'description' => 'required',
+        ]);
+
+        $item = Item::firstOrNew(['id' => $validated['id']]);
+        $item->description = $validated['description'];
+        $item->code_item = $request->input('id');
+        $item->save();
+
+
+        return redirect('/items');
     }
 
     /**
