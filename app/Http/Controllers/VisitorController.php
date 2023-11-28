@@ -69,9 +69,11 @@ class VisitorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Visitor $visitor)
+    public function edit($id)
     {
-        //
+        return view('pages.visitor.formVisitorEdit',[
+            'visitor' => Visitor::where('id', $id)->first()
+        ]);
     }
 
     /**
@@ -79,7 +81,20 @@ class VisitorController extends Controller
      */
     public function update(Request $request, Visitor $visitor)
     {
+        $validated = $request->validate([
+            'id' => 'required',
+            'name' => 'required',
+            'telp' => 'required',
+        ]);
 
+        $visitor = Visitor::firstOrNew(['id' => $validated['id']]);
+
+        $visitor->id= $validated['id'];
+        $visitor->name= $validated['name'];
+        $visitor->telp= $validated['telp'];
+        $visitor->save();
+
+        return redirect('/visitors');
     }
 
     /**

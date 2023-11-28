@@ -200,7 +200,7 @@
                     <div class="d-flex justify-content-between">
                         <h1 class="h3 mb-4 text-gray-800">Admin List</h1>
                         <div>
-                            <a href="/" class="btn btn-primary btn-icon-split">
+                            <a href="admin-list/create" class="btn btn-primary btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </span>
@@ -220,7 +220,6 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>NIM</th>
                                             <th>Username</th>
                                             <th>Password</th>
                                             <th>Actions</th>
@@ -229,30 +228,41 @@
                                     <tfoot>
                                         <tr>
                                             <th>No.</th>
-                                            <th>NIM</th>
                                             <th>Username</th>
                                             <th>Password</th>
                                             <th>Actions</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @foreach ($admin as $adm )
+
+
                                         <tr>
-                                            <td>1</td>
-                                            <td>220441100015</td>
-                                            <td>220441100015</td>
-                                            <td>P4ssw02d</td>
+                                            <td>{{ $i++ }}</td>
+                                            <td>{{ $adm->username }}</td>
+                                            <td>{{ $adm->pass }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-warning">
-                                                    <span class="text">Ubah</span>
-                                                </a>
-                                                <a href="#" class="btn btn-sm btn-danger btn-icon-split">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="text">Hapus</span>
-                                                </a>
+                                                <form class="mt-1" action="{{ route('admin-list.edit', $adm->id) }}" method="GET">
+                                                    <button class="btn btn-sm btn-warning">
+                                                        <span class="text">Ubah</span>
+                                                    </button>
+                                                </form>
+                                                <form class="mt-1" action="{{ route('admin-list.destroy', $adm->id) }}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="btn btn-sm btn-danger btn-icon-split">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </span>
+                                                        <span class="text">Hapus</span>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

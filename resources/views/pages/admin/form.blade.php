@@ -215,15 +215,16 @@
                             <h6 class="m-0 font-weight-bold text-primary">Form Tambah Admin</h6>
                         </div>
                         <div class="card-body">
-                            <form method="post">
+                            <form method="post" action="{{ route('admin-list.store') }}">
+                                @csrf
                                 <div class="row mb-3">
                                     <div class="col-6">
-                                        <label for="nim" class="form-label">NIM</label>
-                                        <input type="text" class="form-control" id="nim">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username">
                                     </div>
                                     <div class="col-6">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password">
+                                        <input type="password" class="form-control" id="password" name="pass">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">

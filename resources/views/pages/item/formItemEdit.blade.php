@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Items | MechLabInventory</title>
+    <title>List Admin | MechLabInventory</title>
 
     <!-- Custom fonts for this template -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -73,6 +73,7 @@
                     </div>
                 </div>
             </li>
+
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -162,7 +163,8 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">MechLab Admin</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle"
+                                    src={{  asset("img/undraw_profile.svg") }}>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -197,13 +199,13 @@
 
                     <!-- Page Heading -->
                     <div class="d-flex justify-content-between">
-                        <h1 class="h3 mb-4 text-gray-800">Items</h1>
+                        <h1 class="h3 mb-4 text-gray-800">Tambah Item</h1>
                         <div>
-                            <a href="/items/create" class="btn btn-primary btn-icon-split">
+                            <a href="/items" class="btn btn-danger btn-icon-split">
                                 <span class="icon text-white-50">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
                                 </span>
-                                <span class="text">Tambah Item</span>
+                                <span class="text">Kembali</span>
                             </a>
                         </div>
                     </div>
@@ -211,73 +213,35 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Item Table</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Tambah Item</h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Kode Item</th>
-                                            <th>Nama Item</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>Kode Item</th>
-                                            <th>Nama Item</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </tfoot>
+                            <form method="post" action="{{ route('items.update' , $item->code_item) }}">
+                                @method('put')
+                                @csrf
+                                <div class="row mb-6">
+                                    <div class="col-6">
+                                        <label for="Code" class="form-label">Code</label>
+                                        <input type="text" class="form-control" oninput="checkLength(this)" name="id" id="Code" maxlength="12" value="{{ $item->code_item }}" readonly>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="nama" class="form-label">Nama barang</label>
+                                        <input type="text" class="form-control" name="description" id="nama" value="{{ $item->description }}">
+                                    </div>
 
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @foreach ($items as $itm )
-
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $itm->code_item }}</td>
-                                            <td>{{ $itm->description }}</td>
-                                            <td>
-                                                <div class="badge py-2 px-4 {{ $itm->isBorrowed === 1 ? 'bg-danger' : 'bg-success' }}">
-                                                    <span class="text-white">
-                                                        {{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <form class="mt-1" action="{{ route('items.edit', $itm->code_item ) }}" method="GET">
-                                                    @csrf
-                                                    <button  class="btn btn-sm btn-warning">
-                                                        <span class="text">Ubah</span>
-                                                    </button>
-                                                </form>
-                                                <form class="mt-1" action="{{ route('items.destroy', $itm->code_item) }}" method="post">
-                                                    @method('delete')
-                                                    @csrf
-                                                    {{-- <input type="number" name="id" value="{{ $itm->code_item }}" class="d-none"> --}}
-                                                    <button  class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm('Are you sure?')">
-                                                        <span class="icon text-white-50">
-                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                        </span>
-                                                        <span class="text">Hapus</span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="text">Simpan</span>
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -288,7 +252,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; MechLab 2023. Dev by <a href="https://github.com/arifrizqy" target="_blank">Rizqy</a> &amp; <a href="https://github.com/RosyidMaulana" target="_blank">Rosyid</a></span>
+                        <span>Copyright &copy; MechLab 2023. Dev by <a href="https://github.com/arifrizqy" target="_blank">Rizqy</a> &amp; <a href="https://github.com/arifrizqy" target="_blank">Rosyid</a></span>
                     </div>
                 </div>
             </footer>
@@ -324,6 +288,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function checkLength(input) {
+            if (input.value.length > 12) {
+                input.value = input.value.slice(0, 12);
+            }
+        }
+    </script>
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
