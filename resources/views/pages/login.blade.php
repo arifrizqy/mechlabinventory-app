@@ -20,6 +20,12 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <style>
+        .bg-login-image {
+            background-image: url("{{ asset('img/login-thumbnail.jpg') }}") !important;
+        }
+    </style>
+
 </head>
 
 <body class="bg-gradient-primary d-flex align-items-center" style="height: 100vh">
