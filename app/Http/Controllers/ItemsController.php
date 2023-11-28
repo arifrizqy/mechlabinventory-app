@@ -72,17 +72,17 @@ class ItemsController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        $deleted['isDeleted'] = 1;
-        $id= $request->input('id');
-        Visitor::where('items_id',$id)->update($deleted);
-        return redirect('/visitors');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Item $item)
+    public function destroy($id)
     {
-        //
+        $deleted['isDeleted'] = 1;
+        $item = Item::where('code_item',$id);
+        $item->update($deleted);
+        return redirect('/items');
     }
 }

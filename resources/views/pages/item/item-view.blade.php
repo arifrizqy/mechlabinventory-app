@@ -247,15 +247,13 @@
                                             <td>{{ $itm->description }}</td>
                                             <td>{{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}</td>
                                             <td>
-                                                
-                                                <form action="{{ route('items.update', $itm->code_item) }}" method="post">
-                                                    @method('put')
+                                                <a href="#" class="btn btn-sm btn-warning">
+                                                    <span class="text">Ubah</span>
+                                                </a>
+                                                <form action="{{ route('items.destroy', $itm->code_item) }}" method="post">
+                                                    @method('delete')
                                                     @csrf
-                                                    <a href="#" class="btn btn-sm btn-warning">
-                                                        <span class="text">Ubah</span>
-                                                    </a>
-                                                    <input type="number" name="id" value="{{ $itm->code_item }}" class="d-none">
-                                                    <button  class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm('Are you sure?')">
+                                                    <button  class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm(`Anda Yakin Hapus '{{ $itm->description }}'`)">
                                                         <span class="icon text-white-50">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </span>
