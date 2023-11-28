@@ -247,7 +247,7 @@
                                             <td>{{ $pjm->visitor->name }}</td>
                                             <td>{{ $pjm->item->description }}</td>
                                             <td>
-                                                <div class="badge py-2 px-4 {{ $pjm->status == 1 ? 'bg-danger' : 'bg-success' }}">
+                                                <div class="badge py-2 px-4 {{ $pjm->status == 1 ? 'bg-success' : 'bg-danger' }}">
                                                     <span class="text-white">
                                                         {{ $pjm->status == 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}
                                                     </span>
@@ -255,7 +255,7 @@
                                             </td>
                                             <td>{{ $pjm->created_at}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-info btn-icon-split ms-2" data-toggle="modal" data-target="#modalDetail">
+                                                <button type="button" class="btn btn-sm btn-info btn-icon-split ms-2" data-toggle="modal" data-target="#modalDetail" id="button-detail" onclick="showDetailPinjam({{ $pjm->id }})">
                                                     <span class="icon text-white-50">
                                                         <i class="fa fa-info" aria-hidden="true"></i>
                                                     </span>
@@ -264,7 +264,7 @@
                                                 <form class="mt-1" action="{{ route('pinjam-pengembalian.update', $pjm->id) }}" method="POST">
                                                     @method('put')
                                                     @csrf
-                                                    <button class="btn btn-sm btn-warning btn-icon-split ms-2" onclick="return confirm(`Are you sure? 'Sudah Mengembalikan`)">
+                                                    <button class="btn btn-sm btn-warning btn-icon-split ms-2" onclick="return confirm(`Are you sure? 'Sudah Mengembalikan'`)">
                                                         <span class="text">Ubah Status</span>
                                                     </button>
 
@@ -323,55 +323,8 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Detail Peminjaman</h5>
                 </div>
-                <div class="modal-body">
-                    <div class="d-flex">
-                        <img class="rounded shadow-sm" src="{{ asset('img/image-not-available.png') }}" alt="Image not available">
-                        <div class="w-100">
-                            <div class="d-flex">
-                                <div class="w-100 ml-3">
-                                    <div class="row">
-                                        <div class="col-3">NIM</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">220441100015</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">Nama</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">Muhammad Arif Rizqy Fachrudin</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">No. Telp.</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">085156543083</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">Status</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">
-                                            <div class="badge py-2 px-4 bg-success">
-                                                <span class="text-white">Sudah dikembalikan</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">Tgl. Pinjam</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">23-Desember-2023</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">Barang</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">
-                                            <div class="row">
-                                                <div class="col-6">Kode Brg.</div>
-                                                <div class="col-6">Nama Brg.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="modal-body" id="bodyDetail">
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
@@ -417,6 +370,76 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+    <script>
+    function showDetailPinjam(itemId) {
+
+        // Di sini, Anda dapat menggunakan AJAX untuk mengambil data dari server
+        // Misalnya, URL /item/detail digunakan untuk mengambil detail item berdasarkan ID
+        $.ajax({
+          url: '/pinjam-pengembalian/' + itemId,
+          type: 'GET',
+          success: function(response) {
+            // Menampilkan data yang diambil ke dalam modal
+            console.log(response);
+            $('#bodyDetail').html(``);
+            $('#bodyDetail').html(
+                `<div class="d-flex">
+                        <img class="rounded shadow-sm" src="{{ asset('img/image-not-available.png') }}" alt="Image not available">
+                        <div class="w-100">
+                            <div class="d-flex">
+                                <div class="w-100 ml-3">
+                                    <div class="row">
+                                        <div class="col-3">NIM</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">${response.dataVisitor.id}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Nama</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">${response.dataVisitor.name}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">No. Telp.</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">${response.dataVisitor.telp}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Status</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">
+                                            <div class="badge py-2 px-4 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
+                                                <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Tgl. Pinjam</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">${response.dataPinjam.created_at}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-3">Barang</div>
+                                        <div class="col-1">:</div>
+                                        <div class="col-8">
+                                            <div class="row">
+                                                <div class="col-6">Kode Brg.</div>
+                                                <div class="col-6">Nama Brg.</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">${response.dataPinjam.item_id}</div>
+                                                <div class="col-6">${response.dataItemVisitor.description}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+            );
+          }
+        });
+      };
+    </script>
 
 </body>
 

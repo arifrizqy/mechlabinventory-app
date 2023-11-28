@@ -3,7 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PinjamPengembalianController;
-use App\Http\Controllers\UserAdminController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\ItemsController;
 use Illuminate\Support\Facades\Route;
@@ -21,10 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::controller(UserAdminController::class)->group(function () {
-    Route::get('/admin-list', 'index');
-});
-
 Route::get('/login', function () {
     return view('pages.login');
 });
@@ -36,6 +32,7 @@ Route::get('/login', function () {
 // Route::controller(ItemController::class)->group(function () {
 //     Route::get('/items', 'index');
 // });
+Route::resource('admin-list', AdminController::class);
 
 Route::resource('/pinjam-pengembalian', PinjamPengembalianController::class);
 
