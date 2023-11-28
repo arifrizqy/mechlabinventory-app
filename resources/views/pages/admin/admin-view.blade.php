@@ -235,11 +235,8 @@
                                     </tfoot>
                                     <tbody>
                                         @php
-                                            $i = 1;
+                                        $i = 1;
                                         @endphp
-                                        @foreach ($admin as $adm )
-
-
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $adm->username }}</td>

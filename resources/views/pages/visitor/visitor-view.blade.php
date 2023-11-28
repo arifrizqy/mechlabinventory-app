@@ -255,7 +255,7 @@
                                                     </button>
 
                                                 </form>
-                                                <form action="{{ route('visitors.destroy', $vst->id) }}" method="post">
+                                                <form class="mt-1" action="{{ route('visitors.destroy', $vst->id) }}" method="post">
                                                     @method('delete')
                                                     @csrf
                                                     <input type="number" name="id" value="{{ $vst->id }}" class="d-none">

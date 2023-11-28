@@ -220,11 +220,11 @@
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control" id="username" name="username">
+                                        <input type="text" class="form-control" id="username" name="username" required>
                                     </div>
                                     <div class="col-6">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password">
+                                        <input type="password" class="form-control" id="password" name="password" required>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">

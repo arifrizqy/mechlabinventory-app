@@ -9,9 +9,10 @@ class Item extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_lab_items';
+    // protected $table = 'tb_item'; // prod
+    protected $table = 'tb_lab_items'; // dev
 
     protected $fillable = [
-        'id','code_item', 'description', 'isDeleted', 'isBorrowed'
+        'id', 'code_item', 'description', 'isDeleted', 'isBorrowed'
     ];
 }
