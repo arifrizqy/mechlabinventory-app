@@ -261,7 +261,7 @@
                                                 <form action="{{ route('pinjam-pengembalian.destroy', $pjm->id) }}" method="POST">
                                                 @method('delete')
                                                 @csrf
-                                                    <button href="#" class="btn btn-sm btn-danger btn-icon-split">
+                                                    <button  class="btn btn-sm btn-danger btn-icon-split">
                                                         <span class="icon text-white-50">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </span>

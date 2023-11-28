@@ -250,11 +250,11 @@
                                                 <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>
                                                 </a>
-                                                <form action="{{ route('items.update', $itm->code_item) }}" method="post">
-                                                    @method('put')
+                                                <form action="{{ route('items.destroy', $itm->code_item) }}" method="post">
+                                                    @method('delete')
                                                     @csrf
-                                                    <button  class="btn btn-sm btn-danger btn-icon-split">
-                                                        <input type="number" name="id" value="{{ $itm->code_item }}" class="d-none">
+                                                    <button  class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm(`Anda Yakin Hapus '{{ $itm->description }}'`)">
+
                                                         <span class="icon text-white-50">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </span>
