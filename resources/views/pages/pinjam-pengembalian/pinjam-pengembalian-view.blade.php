@@ -249,7 +249,7 @@
                                             <td>{{ $pjm->status === 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}</td>
                                             <td>{{ $pjm->created_at}}</td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-info btn-icon-split">
+                                                <button type="button" class="btn btn-sm btn-info btn-icon-split" data-toggle="modal" data-target="#modalDetail">
                                                     <span class="icon text-white-50">
                                                         <i class="fa fa-info" aria-hidden="true"></i>
                                                     </span>
@@ -305,6 +305,24 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    {{-- Modal --}}
+    <div class="modal fade" id="modalDetail" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Peminjaman</h5>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- End of Modal --}}
+
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -341,6 +359,15 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
+    {{-- <script>
+        const myModal = document.getElementById('modalDetail')
+        const myInput = document.getElementById('myInput')
+
+        myModal.addEventListener('shown.bs.modal', () => {
+        myInput.focus()
+        })
+    </script> --}}
 
 </body>
 
