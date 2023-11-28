@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PinjamPengembalianController;
@@ -19,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::controller(UserAdminController::class)->group(function () {
-//     Route::get('/admin-list', 'index');
-// });
+Route::get('/', [HomeController::class, 'index']);
 
 // Route::get('/login', function () {
 //     return view('pages.login');
@@ -34,6 +33,7 @@ use Illuminate\Support\Facades\Route;
 // Route::controller(ItemController::class)->group(function () {
 //     Route::get('/items', 'index');
 // });
+
 Route::get('login', [LoginController::class, 'index']);
 Route::post('login', [LoginController::class, 'identifikasi']);
 Route::get('/logout', [LoginController::class, 'logout']);
@@ -44,3 +44,5 @@ Route::resource('/pinjam-pengembalian', PinjamPengembalianController::class)->mi
 Route::resource('items',ItemsController::class)->middleware('auth.admin');
 
 Route::resource('visitors', VisitorController::class)->middleware('auth.admin');
+
+

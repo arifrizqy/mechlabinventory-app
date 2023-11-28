@@ -217,18 +217,16 @@
                         </div>
                         <div class="card-body">
                             <form method="post" action="{{ route('items.store') }}">
-
                                 @csrf
-                                <div class="row mb-6">
+                                <div class="row mb-3">
                                     <div class="col-6">
                                         <label for="Code" class="form-label">Code</label>
-                                        <input type="text" class="form-control" oninput="checkLength(this)" name="id" id="Code" maxlength="12">
+                                        <input type="text" class="form-control" oninput="checkLength(this)" name="id" id="Code" maxlength="12" required>
                                     </div>
                                     <div class="col-6">
                                         <label for="nama" class="form-label">Nama barang</label>
-                                        <input type="text" class="form-control" name="description" id="nama">
+                                        <input type="text" class="form-control" name="description" id="nama" required>
                                     </div>
-
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-sm btn-primary btn-icon-split">

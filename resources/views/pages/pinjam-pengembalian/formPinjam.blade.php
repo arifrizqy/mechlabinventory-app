@@ -198,7 +198,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-flex justify-content-between">
-                        <h1 class="h3 mb-4 text-gray-800">Tambah Visitor</h1>
+                        <h1 class="h3 mb-4 text-gray-800">Form Peminjaman Barang</h1>
                         <div>
                             <a href="/pinjam-pengembalian" class="btn btn-danger btn-icon-split">
                                 <span class="icon text-white-50">
@@ -216,13 +216,12 @@
                         </div>
                         <div class="card-body">
                             <form method="post" action="{{ route('pinjam-pengembalian.store') }}">
-
                                 @csrf
                                 <div class="row mb-3">
                                     <div class="col-6">
                                         <label for="visitor" class="form-label">Nama Peminjam</label><br>
-                                        <select class="custom-select" id="visitor" name="nim">
-                                            <option >Open this select menu</option>
+                                        <select class="custom-select" id="visitor" name="nim" required>
+                                            <option value="">Pilih Visitor:</option>
                                             @foreach ($visitor as $vst)
                                             <option value="{{ $vst->id }}">{{ $vst->name }}</option>
                                             @endforeach
@@ -230,8 +229,8 @@
                                     </div>
                                     <div class="col-6">
                                         <label for="namaBarang" class="form-label">Nama Barang</label><br>
-                                        <select class="custom-select" id="namaBarang" name="barang">
-                                            <option >Open this select menu</option>
+                                        <select class="custom-select" id="namaBarang" name="barang" required>
+                                            <option value="">Pilih Barang:</option>
                                             @foreach ($pinjam as $pjm)
                                             <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
                                             @endforeach
