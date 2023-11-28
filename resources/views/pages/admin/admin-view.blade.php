@@ -235,33 +235,32 @@
                                     </tfoot>
                                     <tbody>
                                         @php
-                                            $i = 1;
+                                        $i = 1;
                                         @endphp
+
                                         @foreach ($admin as $adm )
-
-
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $adm->username }}</td>
-                                            <td>{{ $adm->pass }}</td>
-                                            <td>
-                                                <form class="mt-1" action="{{ route('admin-list.edit', $adm->id) }}" method="GET">
-                                                    <button class="btn btn-sm btn-warning">
-                                                        <span class="text">Ubah</span>
-                                                    </button>
-                                                </form>
-                                                <form class="mt-1" action="{{ route('admin-list.destroy', $adm->id) }}" method="POST">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button class="btn btn-sm btn-danger btn-icon-split">
-                                                        <span class="icon text-white-50">
-                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                        </span>
-                                                        <span class="text">Hapus</span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $adm->username }}</td>
+                                                <td>{{ $adm->pass }}</td>
+                                                <td>
+                                                    <form class="mt-1" action="{{ route('admin-list.edit', $adm->id) }}" method="GET">
+                                                        <button class="btn btn-sm btn-warning">
+                                                            <span class="text">Ubah</span>
+                                                        </button>
+                                                    </form>
+                                                    <form class="mt-1" action="{{ route('admin-list.destroy', $adm->id) }}" method="POST">
+                                                        @method('delete')
+                                                        @csrf
+                                                        <button class="btn btn-sm btn-danger btn-icon-split">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </span>
+                                                            <span class="text">Hapus</span>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
