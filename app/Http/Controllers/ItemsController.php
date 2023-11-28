@@ -13,7 +13,7 @@ class ItemsController extends Controller
     public function index()
     {
         return view('pages.item.item-view', [
-            'items' => Item::where('isDeleted', 0)->get()
+            'items' => Item::where('isDeleted', 0)->latest()->get()
         ]);
     }
 
@@ -31,14 +31,23 @@ class ItemsController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'item_id' => 'required',
+            'id' => 'required',
             'description' => 'required',
 
         ]);
-
+        $validated['code_item'] = $request->input('id');
         $validated['isDeleted'] = 0;
+        $validated['isBorrowed'] = 0;
 
-        Item::create($validated);
+
+        Item::create([
+            'id' => $validated['id'],
+            'description' => $validated['description'],
+            'code_item' => $validated['code_item'],
+            'isDeleted' => $validated['isDeleted'],
+            'isBorrowed' => $validated['isBorrowed'],
+
+        ]);
         return redirect('/items');
     }
 

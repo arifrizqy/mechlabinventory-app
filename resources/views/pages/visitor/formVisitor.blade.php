@@ -221,7 +221,7 @@
                                 <div class="row mb-3">
                                     <div class="col-4">
                                         <label for="nim" class="form-label">NIM</label>
-                                        <input type="number" class="form-control" oninput="checkLength(this)" name="id  " id="nim" maxlength="12">
+                                        <input type="number" class="form-control" oninput="checkLength(this)" name="id" id="nim" maxlength="12">
                                     </div>
                                     <div class="col-4">
                                         <label for="nama" class="form-label">Nama Lengkap</label>
