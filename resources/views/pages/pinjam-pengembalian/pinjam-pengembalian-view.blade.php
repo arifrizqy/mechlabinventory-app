@@ -247,9 +247,9 @@
                                             <td>{{ $pjm->visitor->name }}</td>
                                             <td>{{ $pjm->item->description }}</td>
                                             <td>
-                                                <div class="badge py-2 px-4 {{ $pjm->status === 1 ? 'bg-danger' : 'bg-success' }}">
+                                                <div class="badge py-2 px-4 {{ $pjm->status == 1 ? 'bg-danger' : 'bg-success' }}">
                                                     <span class="text-white">
-                                                        {{ $pjm->status === 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}
+                                                        {{ $pjm->status == 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}
                                                     </span>
                                                 </div>
                                             </td>
@@ -261,12 +261,15 @@
                                                     </span>
                                                     <span class="text">Detail</span>
                                                 </button>
-                                                <a href="#" class="btn btn-sm btn-warning btn-icon-split ms-2" >
-                                                    <span class="text">Ubah Status</span>
-                                                </a>
-                                                {{-- <a href="#" class="btn btn-sm btn-warning">
-                                                    <span class="text">Ubah</span>
-                                                </a> --}}
+                                                <form class="mt-1" action="{{ route('pinjam-pengembalian.update', $pjm->id) }}" method="POST">
+                                                    @method('put')
+                                                    @csrf
+                                                    <button class="btn btn-sm btn-warning btn-icon-split ms-2" onclick="return confirm(`Are you sure? 'Sudah Mengembalikan`)">
+                                                        <span class="text">Ubah Status</span>
+                                                    </button>
+
+                                                </form>
+
                                                 <form class="mt-1" action="{{ route('pinjam-pengembalian.destroy', $pjm->id) }}" method="POST">
                                                     @method('delete')
                                                     @csrf
