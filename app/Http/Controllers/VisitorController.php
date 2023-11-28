@@ -37,6 +37,8 @@ class VisitorController extends Controller
             'telp' => 'required',
         ]);
 
+        $visitor = Visitor::firstOrNew(['id' => $validated['id']]);
+
         $validated['isDeleted'] = 0;
 
         Visitor::create($validated);
