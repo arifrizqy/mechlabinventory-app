@@ -247,7 +247,6 @@
                                             <td>{{ $itm->description }}</td>
                                             <td>{{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}</td>
                                             <td>
-                                                
                                                 <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>
                                                 </a>

@@ -78,12 +78,12 @@ class PinjamPengembalianController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PostPinjam $postPinjam)
+    public function destroy(PostPinjam $postPinjam,$id)
     {
-        //
+        $post= PostPinjam::where('id',$id);
+        $post->delete();
+        return redirect('/pinjam-pengembalian');
     }
 
-    public function form() {
-        return view('pages.pinjam-pengembalian.form');
-    }
+
 }

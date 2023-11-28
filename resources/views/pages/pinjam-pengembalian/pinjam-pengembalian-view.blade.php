@@ -254,16 +254,20 @@
                                                         <i class="fa fa-info" aria-hidden="true"></i>
                                                     </span>
                                                     <span class="text">Detail</span>
-                                                </button>
-                                                <a href="#" class="btn btn-sm btn-warning">
+                                                </a>
+                                                {{-- <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>
-                                                </a>
-                                                <a href="#" class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm('Are you sure?')">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="text">Hapus</span>
-                                                </a>
+                                                </a> --}}
+                                                <form action="{{ route('pinjam-pengembalian.destroy', $pjm->id) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                                    <button  class="btn btn-sm btn-danger btn-icon-split">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </span>
+                                                        <span class="text">Hapus</span>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
 

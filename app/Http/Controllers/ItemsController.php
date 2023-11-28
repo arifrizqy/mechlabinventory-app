@@ -78,10 +78,11 @@ class ItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Item $item, $id)
+    public function destroy($id)
     {
         $deleted['isDeleted'] = 1;
-        Item::where('code_item', $id)->update($deleted);
+        $item = Item::where('code_item', $id);
+        $item->update($deleted);
         return redirect('/items');
     }
 }
