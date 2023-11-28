@@ -254,7 +254,6 @@
                                                     @method('delete')
                                                     @csrf
                                                     <button  class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm(`Anda Yakin Hapus '{{ $itm->description }}'`)">
-
                                                         <span class="icon text-white-50">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </span>
@@ -269,7 +268,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
