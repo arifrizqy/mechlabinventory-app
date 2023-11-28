@@ -247,14 +247,15 @@
                                             <td>{{ $itm->description }}</td>
                                             <td>{{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}</td>
                                             <td>
-                                                <a href="#" class="btn btn-sm btn-warning">
-                                                    <span class="text">Ubah</span>
-                                                </a>
+                                                
                                                 <form action="{{ route('items.update', $itm->code_item) }}" method="post">
                                                     @method('put')
                                                     @csrf
-                                                    <button  class="btn btn-sm btn-danger btn-icon-split">
-                                                        <input type="number" name="id" value="{{ $itm->code_item }}" class="d-none">
+                                                    <a href="#" class="btn btn-sm btn-warning">
+                                                        <span class="text">Ubah</span>
+                                                    </a>
+                                                    <input type="number" name="id" value="{{ $itm->code_item }}" class="d-none">
+                                                    <button  class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm('Are you sure?')">
                                                         <span class="icon text-white-50">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </span>
@@ -269,7 +270,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 
