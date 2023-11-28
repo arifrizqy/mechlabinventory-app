@@ -245,7 +245,13 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $itm->code_item }}</td>
                                             <td>{{ $itm->description }}</td>
-                                            <td>{{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}</td>
+                                            <td>
+                                                <div class="badge py-2 px-4 {{ $itm->isBorrowed === 1 ? 'bg-danger' : 'bg-success' }}">
+                                                    <span class="text-white">
+                                                        {{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}
+                                                    </span>
+                                                </div>
+                                            </td>
                                             <td>
                                                 <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>

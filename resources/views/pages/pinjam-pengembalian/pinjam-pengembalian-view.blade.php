@@ -246,22 +246,31 @@
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $pjm->visitor->name }}</td>
                                             <td>{{ $pjm->item->description }}</td>
-                                            <td>{{ $pjm->status === 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}</td>
+                                            <td>
+                                                <div class="badge py-2 px-4 {{ $pjm->status === 1 ? 'bg-danger' : 'bg-success' }}">
+                                                    <span class="text-white">
+                                                        {{ $pjm->status === 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}
+                                                    </span>
+                                                </div>
+                                            </td>
                                             <td>{{ $pjm->created_at}}</td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-info btn-icon-split" data-toggle="modal" data-target="#modalDetail">
+                                                <button type="button" class="btn btn-sm btn-info btn-icon-split ms-2" data-toggle="modal" data-target="#modalDetail">
                                                     <span class="icon text-white-50">
                                                         <i class="fa fa-info" aria-hidden="true"></i>
                                                     </span>
                                                     <span class="text">Detail</span>
+                                                </button>
+                                                <a href="#" class="btn btn-sm btn-warning btn-icon-split ms-2" >
+                                                    <span class="text">Ubah Status</span>
                                                 </a>
                                                 {{-- <a href="#" class="btn btn-sm btn-warning">
                                                     <span class="text">Ubah</span>
                                                 </a> --}}
-                                                <form action="{{ route('pinjam-pengembalian.destroy', $pjm->id) }}" method="POST">
-                                                @method('delete')
-                                                @csrf
-                                                    <button  class="btn btn-sm btn-danger btn-icon-split">
+                                                <form class="mt-1" action="{{ route('pinjam-pengembalian.destroy', $pjm->id) }}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                    <button class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm('Are you sure?')">
                                                         <span class="icon text-white-50">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </span>
@@ -270,7 +279,6 @@
                                                 </form>
                                             </td>
                                         </tr>
-
                                         @endforeach
                                     </tbody>
                                 </table>
