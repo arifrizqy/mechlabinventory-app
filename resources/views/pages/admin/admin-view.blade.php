@@ -109,8 +109,11 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    {{-- Scroll to Top & Logout Modal --}}
-    @include('partials.scroll-to-top-and-logout')
+    {{-- Scroll to Top --}}
+    @include('partials.scroll-to-top')
+
+    {{-- Logout Modal --}}
+    @include('partials.logout-modal')
 
     {{-- JavaScript - Library --}}
     @include('partials.script')
