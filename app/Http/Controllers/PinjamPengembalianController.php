@@ -29,7 +29,7 @@ class PinjamPengembalianController extends Controller
     {
         return view('pages.pinjam-pengembalian.formPinjam', [
             'visitor' => Visitor::Where('IsDeleted', 0)->get(),
-            'pinjam' => Item::where('isDeleted', 0)->where('isBorrowed', 0)->latest()->get()
+            'pinjam' => Item::where('isDeleted', 0)->whereNotIn('qty', [0])->latest()->get()
         ]);
     }
 
@@ -42,13 +42,20 @@ class PinjamPengembalianController extends Controller
         //     'nim' => 'required',
         // ]);
 
-        $validated['nim_or_nip'] = $request->input('nim');
-        $validated['item_id'] = $request->input('barang');
-        $validated['status'] = 0;
-        $validated['isDeleted'] = 0;
+        // for ($i=0; $i < ; $i++) {
+            $validated['nim'] = $request->input('nim');
+            $validated['item_id'] = $request->input('barang'.$i);
+            $validated['status'] = 0;
+            $validated['isDeleted'] = 0;
 
-        PostPinjam::create($validated);
-        Item::where('code_item', $validated['item_id'])->update(['isBorrowed' => 1]);
+            PostPinjam::create($validated);
+
+            $pinjam = 9;//ambil data validasi dari total yang dipinjam
+
+            $item = Item::where('code_item', $validated['item_id']);
+            $total = $item->qty;
+            $item->update(['borrowed' => $pinjam, 'qty' => $total - $pinjam]);
+        // }
 
         return redirect('/pinjam-pengembalian');
     }
@@ -59,7 +66,7 @@ class PinjamPengembalianController extends Controller
     public function show(PostPinjam $postPinjam, $id)
     {
         $dataPinjam = PostPinjam::where('id', $id)->first();
-        $dataVisitor = Visitor::where('id', $dataPinjam->nim_or_nip)->first();
+        $dataVisitor = Visitor::where('id', $dataPinjam->nim)->first();
         $dataItem = Item::where('id', $dataPinjam->item_id)->first();
 
 
@@ -87,7 +94,14 @@ class PinjamPengembalianController extends Controller
         $post = PostPinjam::where('id', $id)->first();
         $post->update($status);
 
-        Item::where('code_item', $post->item_id)->update(['isBorrowed' => 0]);
+        // Item::where('code_item', $post->item_id)->update(['borrowed' => 0]);
+
+
+
+        $item = Item::where('code_item', $post->item_id);
+        $sum = $item->borrowed; //ambil jumlah dipinjam
+        $count = $item->qty; //ambil jumlah quantity
+        $item->update(['borrowed' => 0, 'qty' => $sum + $count]);
         return redirect('/pinjam-pengembalian');
     }
 
@@ -97,7 +111,12 @@ class PinjamPengembalianController extends Controller
     public function destroy(PostPinjam $postPinjam, $id)
     {
         $post = PostPinjam::where('id', $id)->first();
-        Item::where('code_item', $post->item_id)->update(['isBorrowed' => 0]);
+
+        $item = Item::where('code_item', $post->item_id);
+        $sum = $item->borrowed;
+        $count = $item->qty;
+        $item->update(['borrowed' => 0, 'qty' => $sum + $count]);
+
         $post->delete();
         return redirect('/pinjam-pengembalian');
     }

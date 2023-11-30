@@ -75,18 +75,24 @@
                                             <td>{{ $itm->description }}</td>
                                             <td class="d-flex flex-column justify-content-between">
                                                 <div>
-                                                    <span class="badge py-1 px-3 text-white {{ $itm->isBorrowed === 1 ? 'bg-danger' : 'bg-success' }}">
-                                                        {{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}
-                                                    </span> : {{ $itm->isBorrowed }}
+                                                    <span class="badge py-1 px-3 text-white bg-success }}">
+                                                        Tersedia
+                                                    </span> : {{ $itm->qty }}
                                                 </div>
                                                 <div>
-                                                    <span class="badge py-1 px-3 text-white {{ $itm->isBorrowed > 1 ? 'bg-danger' : 'bg-success' }}">
-                                                        {{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}
-                                                    </span> : {{ $itm->isBorrowed }}
+                                                    <span class="badge py-1 px-3 text-white {{ $itm->borrowed > 0 ? 'd-none' : 'bg-info' }}">
+                                                        Dipinjam
+                                                    </span> : {{ $itm->borrowed }}
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="d-flex">
+                                                    <button type="button" class="btn btn-sm btn-info btn-icon-split ms-2" data-toggle="modal" data-target="#modalDetail" id="button-detail" onclick="showDetailItem('{{ $itm->code_item }}')">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fa fa-info" aria-hidden="true"></i>
+                                                        </span>
+                                                        <span class="text">Detail</span>
+                                                    </button>
                                                     <form class="mt-1" action="{{ route('items.edit', $itm->code_item ) }}" method="GET">
                                                         @csrf
                                                         <button  class="btn btn-sm btn-warning btn-icon-split">
@@ -141,16 +147,26 @@
                             <h6 class="m-0 font-weight-bold text-primary">Form Tambah Item</h6>
                         </div>
                         <div class="card-body">
-                            <form method="post" action="{{ route('items.store') }}">
+                            <form method="post" action="{{ route('items.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row mb-3">
-                                    <div class="col-6">
+                                    <div class="col-3">
+                                        <label for="image" class="form-label">Foto</label>
+                                        <input class="form-control  @error('image') is-invalid
+                                                @enderror" type="file" id="image" name="image"  onchange="previewImage()">
+                                        <img class="img-preview img-fluid mb-2 col-sm-4 ">
+                                    </div>
+                                    <div class="col-3">
                                         <label for="Code" class="form-label">Code</label>
                                         <input type="text" class="form-control" oninput="checkLength(this)" name="id" id="Code" maxlength="12" required>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-3">
                                         <label for="nama" class="form-label">Nama barang</label>
                                         <input type="text" class="form-control" name="description" id="nama" required>
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="nama" class="form-label">Stock</label>
+                                        <input type="number" class="form-control" name="qty" id="nama" >
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
@@ -181,6 +197,24 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    {{-- Modal Detail --}}
+    <div class="modal fade" id="modalDetail" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detail Barang</h5>
+                </div>
+                <div class="modal-body" id="bodyDetail">
+                    {{-- Data akan ditampilkan menggunakan JavaScript - AJAX dibawah --}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- End of Modal Detail --}}
+
     {{-- Scroll to Top --}}
     @include('partials.scroll-to-top')
 
@@ -189,6 +223,68 @@
 
     {{-- JavaScript - Library --}}
     @include('partials.script')
+    <script>
+        function showDetailItem(codeItem) {
+            // Di sini, Anda dapat menggunakan AJAX untuk mengambil data dari server
+            // Misalnya, URL /item/detail digunakan untuk mengambil detail item berdasarkan ID
+            $.ajax({
+            url: '/items/' + codeItem,
+            type: 'GET',
+            // success: function(response) {
+            //     console.log(response);
+            // }
+
+            success: function(response) {
+                $('#bodyDetail').html(
+                    `<div class="d-flex">
+                            <img class="rounded shadow-sm" src="{{ asset('storage/itemPost/${response.itemDetail.image}') }}" alt="Image not available">
+                            <div class="w-100">
+                                <div class="d-flex">
+                                    <div class="w-100 ml-3">
+                                        <div class="row">
+                                            <div class="col-3">Code Item</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">${response.itemDetail.code_item}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">Nama Barang</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">${response.itemDetail.description}</div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-3">Stok Barang</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">${response.itemDetail.qty}</div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                );
+            }
+            });
+        };
+    </script>
+
+    <script>
+        function previewImage() {
+         const image = document.querySelector('#image');
+         const imgPreview = document.querySelector('.img-preview');
+
+        imgPreview.style.display = 'block';
+
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+
+        oFReader.onload = function(oFREvent) {
+            imgPreview.src = oFREvent.target.result;
+        }
+     }
+    </script>
 
 </body>
 @endsection
