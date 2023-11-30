@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PostPinjam;
 use App\Models\Item;
 use App\Models\Visitor;
+use App\Models\DetailLoan;
 use Illuminate\Http\Request;
 
 class PinjamPengembalianController extends Controller
@@ -18,7 +19,7 @@ class PinjamPengembalianController extends Controller
             'title' => 'Pinjam - Pengembalian',
             'pinjam' => PostPinjam::Where('IsDeleted', 0)->latest()->get(),
             'visitor' => Visitor::Where('IsDeleted', 0)->get(),
-            'pinjamForm' => Item::where('isDeleted', 0)->where('isBorrowed', 0)->latest()->get()
+            'pinjamForm' => Item::where('isDeleted', 0)->where('stock', [0])->latest()->get()
         ]);
     }
 
@@ -27,10 +28,10 @@ class PinjamPengembalianController extends Controller
      */
     public function create()
     {
-        return view('pages.pinjam-pengembalian.formPinjam', [
-            'visitor' => Visitor::Where('IsDeleted', 0)->get(),
-            'pinjam' => Item::where('isDeleted', 0)->whereNotIn('qty', [0])->latest()->get()
-        ]);
+        // return view('pages.pinjam-pengembalian.formPinjam', [
+        //     'visitor' => Visitor::Where('IsDeleted', 0)->get(),
+        //     'pinjam' => Item::where('isDeleted', 0)->whereNotIn('stock', [0])->latest()->get()
+        // ]);
     }
 
     /**
@@ -49,7 +50,7 @@ class PinjamPengembalianController extends Controller
         // for ($i = 0; $i < $request->input('listBrgPinjam'); $i++) {
         //     $validated['nim_or_nip'] = $request->input('nim');
         //     $validated['item_id'] = $request->input('listBrgPinjam')[$i]["item"];
-        //     // $validated['qty'] = $request->input('listBrgPinjam')[$i]["qty"];
+        //     // $validated['stock'] = $request->input('listBrgPinjam')[$i]["stock"];
         //     $validated['status'] = 0;
         //     $validated['isDeleted'] = 0;
 
@@ -58,8 +59,8 @@ class PinjamPengembalianController extends Controller
         $pinjam = 9; //ambil data validasi dari total yang dipinjam
 
         $item = Item::where('code_item', $validated['item_id']);
-        $total = $item->qty;
-        $item->update(['borrowed' => $pinjam, 'qty' => $total - $pinjam]);
+        $total = $item->stock;
+        $item->update(['borrowed' => $pinjam, 'stock' => $total - $pinjam]);
         // }
         //     PostPinjam::create($validated);
         //     Item::where('code_item', $validated['item_id'])->update(['isBorrowed' => 1]);
@@ -75,14 +76,14 @@ class PinjamPengembalianController extends Controller
     public function show(PostPinjam $postPinjam, $id)
     {
         $dataPinjam = PostPinjam::where('id', $id)->first();
-        $dataVisitor = Visitor::where('id', $dataPinjam->nim)->first();
-        $dataItem = Item::where('id', $dataPinjam->item_id)->first();
+        $dataVisitor = Visitor::where('id', $dataPinjam->nim_or_nip)->first();
+        $dataDetail = DetailLoan::where('loan_id', $dataPinjam->id)->latest()->get();
 
 
         return array(
             'dataVisitor' => $dataVisitor,
             'dataItemVisitor' => $dataItem,
-            'dataPinjam' => $dataPinjam,
+            'dataDetail' => $dataDetail,
         );
     }
 
@@ -109,8 +110,8 @@ class PinjamPengembalianController extends Controller
 
         $item = Item::where('code_item', $post->item_id);
         $sum = $item->borrowed; //ambil jumlah dipinjam
-        $count = $item->qty; //ambil jumlah quantity
-        $item->update(['borrowed' => 0, 'qty' => $sum + $count]);
+        $count = $item->stock; //ambil jumlah quantity
+        $item->update(['borrowed' => 0, 'stock' => $sum + $count]);
         return redirect('/pinjam-pengembalian');
     }
 
@@ -123,8 +124,8 @@ class PinjamPengembalianController extends Controller
 
         $item = Item::where('code_item', $post->item_id);
         $sum = $item->borrowed;
-        $count = $item->qty;
-        $item->update(['borrowed' => 0, 'qty' => $sum + $count]);
+        $count = $item->stock;
+        $item->update(['borrowed' => 0, 'stock' => $sum + $count]);
 
         $post->delete();
         return redirect('/pinjam-pengembalian');

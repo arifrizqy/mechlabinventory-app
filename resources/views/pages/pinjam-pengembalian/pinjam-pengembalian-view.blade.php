@@ -48,7 +48,6 @@
                                         <tr>
                                             <th>No.</th>
                                             <th>Nama Peminjam</th>
-                                            <th>Nama Barang</th>
                                             <th>Status</th>
                                             <th>Tgl. Pinjam</th>
                                             <th>Actions</th>
@@ -58,7 +57,6 @@
                                         <tr>
                                             <th>No.</th>
                                             <th>Nama Peminjam</th>
-                                            <th>Nama Barang</th>
                                             <th>Status</th>
                                             <th>Tgl. Pinjam</th>
                                             <th>Actions</th>
@@ -72,7 +70,6 @@
                                         <tr>
                                             <td>{{ $i++ }}</td>
                                             <td>{{ $pjm->visitor->name }}</td>
-                                            <td>{{ $pjm->item->description }}</td>
                                             <td>
                                                 <div class="badge py-1 px-3 {{ $pjm->status == 1 ? 'bg-success' : 'bg-danger' }}">
                                                     <span class="text-white">
@@ -257,7 +254,7 @@
             return "";
         }
 
-        $(document).ready(function() { 
+        $(document).ready(function() {
             $("#formPinjam").submit(function(e) {
                 e.preventDefault();
                 const nim = $('#visitor').val();
@@ -289,7 +286,7 @@
             const listSelectOpt = $('.brg-pinjam').get();
 
             const daftarPinjam = [];
-            
+
             listSelectOpt.forEach(element => {
                 const data = {
                     "item" : element.children[0].value,

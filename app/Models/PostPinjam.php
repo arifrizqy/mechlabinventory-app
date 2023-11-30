@@ -12,17 +12,17 @@ class PostPinjam extends Model
 
     protected $table = 'log_loan_return';
     protected $guarded = 'id';
-    // protected $fillable = ['nim_or_nip', 'item_id', 'status', 'isDeleted']; // prod
-    protected $fillable = ['nim', 'item_id', 'status', 'isDeleted']; // dev
+    protected $fillable = ['nim_or_nip', 'status', 'isDeleted']; // prod
+    // protected $fillable = ['nim', 'item_id', 'status', 'isDeleted']; // dev
 
     public function visitor()
     {
-        // return $this->belongsTo(Visitor::class, 'nim_or_nip'); // prod
-        return $this->belongsTo(Visitor::class, 'nim'); // dev
+        return $this->belongsTo(Visitor::class, 'nim_or_nip'); // prod
+        // return $this->belongsTo(Visitor::class, 'nim'); // dev
     }
 
-    public function item()
+    public function detai()
     {
-        return $this->belongsTo(Item::class, 'item_id');
+        return $this->belongsTo(detail::class, 'nim_or_nip');
     }
 }
