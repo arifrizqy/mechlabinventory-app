@@ -74,7 +74,7 @@
                                             <td>{{ $pjm->visitor->name }}</td>
                                             <td>{{ $pjm->item->description }}</td>
                                             <td>
-                                                <div class="badge py-1 px-2 {{ $pjm->status == 1 ? 'bg-success' : 'bg-danger' }}">
+                                                <div class="badge py-1 px-3 {{ $pjm->status == 1 ? 'bg-success' : 'bg-danger' }}">
                                                     <span class="text-white">
                                                         {{ $pjm->status == 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}
                                                     </span>
@@ -140,7 +140,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Detail Peminjaman</h5>
                 </div>
                 <div class="modal-body" id="bodyDetail">
-
+                    {{-- Data akan ditampilkan menggunakan JavaScript - AJAX dibawah --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
@@ -150,77 +150,80 @@
     </div>
     {{-- End of Modal Detail --}}
 
-    {{-- Scroll to Top & Logout Modal --}}
-    @include('partials.scroll-to-top-and-logout')
+    {{-- Scroll to Top --}}
+    @include('partials.scroll-to-top')
+
+    {{-- Logout Modal --}}
+    @include('partials.logout-modal')
 
     {{-- JavaScript - Library --}}
     @include('partials.script')
 
     <script>
-    function showDetailPinjam(itemId) {
-        // Di sini, Anda dapat menggunakan AJAX untuk mengambil data dari server
-        // Misalnya, URL /item/detail digunakan untuk mengambil detail item berdasarkan ID
-        $.ajax({
-          url: '/pinjam-pengembalian/' + itemId,
-          type: 'GET',
-          success: function(response) {
-            $('#bodyDetail').html(
-                `<div class="d-flex">
-                        <img class="rounded shadow-sm" src="{{ asset('img/image-not-available.png') }}" alt="Image not available">
-                        <div class="w-100">
-                            <div class="d-flex">
-                                <div class="w-100 ml-3">
-                                    <div class="row">
-                                        <div class="col-3">NIM</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">${response.dataVisitor.id}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">Nama</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">${response.dataVisitor.name}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">No. Telp.</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">${response.dataVisitor.telp}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">Status</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">
-                                            <div class="badge py-2 px-4 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
-                                                <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
+        function showDetailPinjam(itemId) {
+            // Di sini, Anda dapat menggunakan AJAX untuk mengambil data dari server
+            // Misalnya, URL /item/detail digunakan untuk mengambil detail item berdasarkan ID
+            $.ajax({
+            url: '/pinjam-pengembalian/' + itemId,
+            type: 'GET',
+            success: function(response) {
+                $('#bodyDetail').html(
+                    `<div class="d-flex">
+                            <img class="rounded shadow-sm" src="{{ asset('img/image-not-available.png') }}" alt="Image not available">
+                            <div class="w-100">
+                                <div class="d-flex">
+                                    <div class="w-100 ml-3">
+                                        <div class="row">
+                                            <div class="col-3">NIM</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">${response.dataVisitor.id}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">Nama</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">${response.dataVisitor.name}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">No. Telp.</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">${response.dataVisitor.telp}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">Status</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">
+                                                <div class="badge py-2 px-4 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
+                                                    <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">Tgl. Pinjam</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">${response.dataPinjam.created_at}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3">Barang</div>
-                                        <div class="col-1">:</div>
-                                        <div class="col-8">
-                                            <div class="row">
-                                                <div class="col-6">Kode Brg.</div>
-                                                <div class="col-6">Nama Brg.</div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">${response.dataPinjam.item_id}</div>
-                                                <div class="col-6">${response.dataItemVisitor.description}</div>
+                                        <div class="row">
+                                            <div class="col-3">Tgl. Pinjam</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">${response.dataPinjam.created_at}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3">Barang</div>
+                                            <div class="col-1">:</div>
+                                            <div class="col-8">
+                                                <div class="row">
+                                                    <div class="col-6">Kode Brg.</div>
+                                                    <div class="col-6">Nama Brg.</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">${response.dataPinjam.item_id}</div>
+                                                    <div class="col-6">${response.dataItemVisitor.description}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>`
-            );
-          }
-        });
-      };
+                        </div>`
+                );
+            }
+            });
+        };
     </script>
 
 </body>

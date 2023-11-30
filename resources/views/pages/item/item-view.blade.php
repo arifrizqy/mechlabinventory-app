@@ -74,7 +74,7 @@
                                             <td>{{ $itm->code_item }}</td>
                                             <td>{{ $itm->description }}</td>
                                             <td>
-                                                <div class="badge py-2 px-4 {{ $itm->isBorrowed === 1 ? 'bg-danger' : 'bg-success' }}">
+                                                <div class="badge py-1 px-3 {{ $itm->isBorrowed === 1 ? 'bg-danger' : 'bg-success' }}">
                                                     <span class="text-white">
                                                         {{ $itm->isBorrowed === 1 ? 'Dipinjam' : 'Tersedia' }}
                                                     </span>
@@ -122,8 +122,11 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    {{-- Scroll to Top & Logout Modal --}}
-    @include('partials.scroll-to-top-and-logout')
+    {{-- Scroll to Top --}}
+    @include('partials.scroll-to-top')
+
+    {{-- Logout Modal --}}
+    @include('partials.logout-modal')
 
     {{-- JavaScript - Library --}}
     @include('partials.script')
