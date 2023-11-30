@@ -216,17 +216,27 @@
                             <h6 class="m-0 font-weight-bold text-primary">Form Tambah Item</h6>
                         </div>
                         <div class="card-body">
-                            <form method="post" action="{{ route('items.update' , $item->code_item) }}">
+                            <form method="post" action="{{ route('items.update' , $item->code_item) }}" enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
                                 <div class="row mb-6">
-                                    <div class="col-6">
+                                    <div class="col-3">
+                                        <label for="image" class="form-label">Foto</label>
+                                        <input class="form-control  @error('image') is-invalid
+                                                @enderror" type="file" id="image" name="image"  onchange="previewImage()">
+                                        <img class="img-preview img-fluid mb-2 col-sm-4 ">
+                                    </div>
+                                    <div class="col-3">
                                         <label for="Code" class="form-label">Code</label>
                                         <input type="text" class="form-control" oninput="checkLength(this)" name="id" id="Code" maxlength="12" value="{{ $item->code_item }}" readonly>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-3">
                                         <label for="nama" class="form-label">Nama barang</label>
                                         <input type="text" class="form-control" name="description" id="nama" value="{{ $item->description }}">
+                                    </div>
+                                    <div class="col-3">
+                                        <label for="nama" class="form-label">Stock</label>
+                                        <input type="number" class="form-control" name="qty" id="nama" value="{{ $item->qty }}">
                                     </div>
 
                                 </div>
