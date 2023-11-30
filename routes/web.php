@@ -20,29 +20,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
-
-// Route::get('/login', function () {
-//     return view('pages.login');
-// });
-
-// Route::controller(VisitorController::class)->group(function () {
-//     Route::get('/visitors', 'index');
-// });
-
-// Route::controller(ItemController::class)->group(function () {
-//     Route::get('/items', 'index');
-// });
-
-Route::get('login', [LoginController::class, 'index']);
-Route::post('login', [LoginController::class, 'identifikasi']);
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class, 'identifikasi']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
+Route::get('/', [HomeController::class, 'index'])->middleware('auth.admin');
 
-Route::resource('admin-list', AdminController::class)->middleware('auth.admin');
+Route::resource('/admin-list', AdminController::class)->middleware('auth.admin');
 Route::resource('/pinjam-pengembalian', PinjamPengembalianController::class)->middleware('auth.admin');
-Route::resource('items',ItemsController::class)->middleware('auth.admin');
+Route::resource('/items', ItemsController::class)->middleware('auth.admin');
 
-Route::resource('visitors', VisitorController::class)->middleware('auth.admin');
-
-
+Route::resource('/visitors', VisitorController::class)->middleware('auth.admin');

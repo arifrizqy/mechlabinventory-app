@@ -13,8 +13,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.admin-view',[
-            'admin' => Admin::where('isDeleted' , 0)->latest()->get()
+        return view('pages.admin.admin-view', [
+            'title' => 'List Admin',
+            'admin' => Admin::where('isDeleted', 0)->latest()->get()
         ]);
     }
 
@@ -35,7 +36,7 @@ class AdminController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
-        $validated['password'] = Hash::make( $validated['password']);
+        $validated['password'] = Hash::make($validated['password']);
         // dd($validated);
         Admin::create($validated);
 
@@ -55,7 +56,7 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        return view('pages.admin.formEdit',[
+        return view('pages.admin.formEdit', [
             'admin' => Admin::where('id', $id)->first()
         ]);
     }
@@ -78,7 +79,6 @@ class AdminController extends Controller
         $admin->save();
 
         return redirect('/admin-list');
-
     }
 
     /**
@@ -87,7 +87,7 @@ class AdminController extends Controller
     public function destroy($id)
     {
         // $deleted['isDeleted'] = 1;
-        Admin::where('id',$id)->delete();
+        Admin::where('id', $id)->delete();
         return redirect('/admin-list');
     }
 }

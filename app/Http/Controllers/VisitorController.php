@@ -13,6 +13,7 @@ class VisitorController extends Controller
     public function index()
     {
         return view('pages.visitor.visitor-view', [
+            'title' => 'Visitors',
             'visitor' => Visitor::where('isDeleted', 0)->latest()->get()
         ]);
     }
@@ -39,13 +40,13 @@ class VisitorController extends Controller
 
         $visitor = Visitor::firstOrNew(['id' => $validated['id']]);
 
-        if($visitor->exists){
-            $visitor->id= $validated['id'];
-            $visitor->name= $validated['name'];
-            $visitor->telp= $validated['telp'];
+        if ($visitor->exists) {
+            $visitor->id = $validated['id'];
+            $visitor->name = $validated['name'];
+            $visitor->telp = $validated['telp'];
             $visitor->isDeleted = 0;
             $visitor->save();
-        }else{
+        } else {
             Visitor::create([
                 'id' => $validated['id'],
                 'name' => $validated['name'],
@@ -55,7 +56,6 @@ class VisitorController extends Controller
         }
 
         return redirect('/visitors');
-
     }
 
     /**
@@ -71,7 +71,7 @@ class VisitorController extends Controller
      */
     public function edit($id)
     {
-        return view('pages.visitor.formVisitorEdit',[
+        return view('pages.visitor.formVisitorEdit', [
             'visitor' => Visitor::where('id', $id)->first()
         ]);
     }
@@ -89,9 +89,9 @@ class VisitorController extends Controller
 
         $visitor = Visitor::firstOrNew(['id' => $validated['id']]);
 
-        $visitor->id= $validated['id'];
-        $visitor->name= $validated['name'];
-        $visitor->telp= $validated['telp'];
+        $visitor->id = $validated['id'];
+        $visitor->name = $validated['name'];
+        $visitor->telp = $validated['telp'];
         $visitor->save();
 
         return redirect('/visitors');
@@ -103,7 +103,7 @@ class VisitorController extends Controller
     public function destroy($id)
     {
         $deleted['isDeleted'] = 1;
-        Visitor::where('id',$id)->update($deleted);
+        Visitor::where('id', $id)->update($deleted);
 
         return redirect('/visitors');
     }

@@ -13,6 +13,7 @@ class ItemsController extends Controller
     public function index()
     {
         return view('pages.item.item-view', [
+            'title' => 'Items',
             'items' => Item::where('isDeleted', 0)->latest()->get()
         ]);
     }
@@ -72,8 +73,8 @@ class ItemsController extends Controller
      */
     public function edit($id)
     {
-        return view('pages.item.formItemEdit',[
-            'item' =>Item::where('code_item', $id)->first()
+        return view('pages.item.formItemEdit', [
+            'item' => Item::where('code_item', $id)->first()
         ]);
     }
 

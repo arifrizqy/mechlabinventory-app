@@ -14,9 +14,9 @@ class PinjamPengembalianController extends Controller
      */
     public function index()
     {
-        return view('pages.pinjam-pengembalian.pinjam-pengembalian-view',[
+        return view('pages.pinjam-pengembalian.pinjam-pengembalian-view', [
+            'title' => 'Pinjam - Pengembalian',
             'pinjam' => PostPinjam::Where('IsDeleted', 0)->latest()->get()
-
         ]);
     }
 
@@ -25,7 +25,7 @@ class PinjamPengembalianController extends Controller
      */
     public function create()
     {
-        return view('pages.pinjam-pengembalian.formPinjam',[
+        return view('pages.pinjam-pengembalian.formPinjam', [
             'visitor' => Visitor::Where('IsDeleted', 0)->get(),
             'pinjam' => Item::where('isDeleted', 0)->where('isBorrowed', 0)->latest()->get()
         ]);
@@ -40,7 +40,7 @@ class PinjamPengembalianController extends Controller
         //     'nim' => 'required',
         // ]);
 
-        $validated['nim'] = $request->input('nim');
+        $validated['nim_or_nip'] = $request->input('nim');
         $validated['item_id'] = $request->input('barang');
         $validated['status'] = 0;
         $validated['isDeleted'] = 0;
@@ -57,8 +57,8 @@ class PinjamPengembalianController extends Controller
     public function show(PostPinjam $postPinjam, $id)
     {
         $dataPinjam = PostPinjam::where('id', $id)->first();
-        $dataVisitor = Visitor::where('id', $dataPinjam->nim)->first();
-        $dataItem = Item::where('code_item', $dataPinjam->item_id)->first();
+        $dataVisitor = Visitor::where('id', $dataPinjam->nim_or_nip)->first();
+        $dataItem = Item::where('id', $dataPinjam->item_id)->first();
 
 
         return array(
@@ -66,7 +66,6 @@ class PinjamPengembalianController extends Controller
             'dataItemVisitor' => $dataItem,
             'dataPinjam' => $dataPinjam,
         );
-
     }
 
     /**
@@ -93,13 +92,11 @@ class PinjamPengembalianController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PostPinjam $postPinjam,$id)
+    public function destroy(PostPinjam $postPinjam, $id)
     {
-        $post= PostPinjam::where('id',$id)->first();
+        $post = PostPinjam::where('id', $id)->first();
         Item::where('code_item', $post->item_id)->update(['isBorrowed' => 0]);
         $post->delete();
         return redirect('/pinjam-pengembalian');
     }
-
-
 }
