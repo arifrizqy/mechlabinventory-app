@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
@@ -12,6 +12,7 @@ class LoginController extends Controller
     {
         return view('pages.auth.login', [
             'title' => 'Login',
+            'items' => Item::where('isDeleted', 0)->whereNotIn('qty', [0])->latest()->get()
         ]);
     }
 
