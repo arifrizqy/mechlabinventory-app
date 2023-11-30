@@ -243,50 +243,50 @@
                 type: 'GET',
                 success: function(response) {
                     $('#bodyDetail').html(`
-                        <div class="d-flex">
+                        <div class="container-fluid">
                             <div class="row">
-                                <div class="col-3">NIM</div>
-                                <div class="col-1">:</div>
+                                <div class="col-3">NIM</div> :
                                 <div class="col-8">${response.dataVisitor.id}</div>
                             </div>
                             <div class="row">
-                                <div class="col-3">Nama</div>
-                                <div class="col-1">:</div>
+                                <div class="col-3">Nama</div> :
                                 <div class="col-8">${response.dataVisitor.name}</div>
                             </div>
                             <div class="row">
-                                <div class="col-3">No. Telp.</div>
-                                <div class="col-1">:</div>
+                                <div class="col-3">No. Telp.</div> :
                                 <div class="col-8">${response.dataVisitor.telp}</div>
                             </div>
                             <div class="row">
-                                <div class="col-3">Status</div>
-                                <div class="col-1">:</div>
-                                <div class="col-8">
-                                    <div class="badge py-2 px-4 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
-                                        <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-3">Tgl. Pinjam</div>
-                                <div class="col-1">:</div>
+                                <div class="col-3">Tgl. Pinjam</div> :
                                 <div class="col-8">${response.dataPinjam.created_at}</div>
                             </div>
                             <div class="row">
-                                <div class="col-3">Barang</div>
-                                <div class="col-1">:</div>
-                                <div class="col-8">
-                                    <div class="row">
-                                        <div class="col-6">Kode Brg.</div>
-                                        <div class="col-6">Nama Brg.</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">${response.dataPinjam.item_id}</div>
-                                        <div class="col-6">${response.dataItemVisitor.description}</div>
-                                    </div>
-                                </div>
+                                <div class="col-3">Barang</div> :
                             </div>
+                            <table class="table mt-2">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Kode Brg.</th>
+                                        <th scope="col">Nama Barang</th>
+                                        <th scope="col">Qty.</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>${response.dataItemVisitor.code_item}</td>
+                                        <td>${response.dataItemVisitor.description}</td>
+                                        <td>3</td>
+                                        <td>
+                                            <div class="badge py-1 px-3 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
+                                                <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     `);
                 }
