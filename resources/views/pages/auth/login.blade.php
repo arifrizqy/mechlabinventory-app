@@ -14,7 +14,7 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block" style="background:url({{ asset('img/login-thumbnail.jpg') }});background-position:center;background-size:cover;"></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
@@ -52,15 +52,8 @@
 
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+    {{-- JavaScript - Library --}}
+    @include('partials.script')
 
 </body>
 @endsection
