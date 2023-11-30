@@ -56,7 +56,7 @@ class PinjamPengembalianController extends Controller
 
         PostPinjam::create($validated);
 
-        $pinjam = 9; //ambil data validasi dari total yang dipinjam
+
 
         $item = Item::where('code_item', $validated['item_id']);
         $total = $item->stock;
@@ -105,14 +105,27 @@ class PinjamPengembalianController extends Controller
         $post->update($status);
 
         // Item::where('code_item', $post->item_id)->update(['borrowed' => 0]);
+        $detail = DetailLoan::where('loan_id', $post->id)->latest()->get();
+
+        foreach($detail as $dt){
+            $idDetail = $dt->id;
+            $jmlPinjam = $dt->qty;
+
+            $item = Item::where('code_item', $dt->item_id)->first();
+            $jmlStock = $item->stock;
+            $total = $jmlStock + $jmlPinjam;
+            $item->update(['borrowed' => 0, 'stock' => $total]);
+
+            DetailLoan::where('id', $idDetail)->update(['qty' => 0]);
+        }
 
 
 
-        $item = Item::where('code_item', $post->item_id);
-        $sum = $item->borrowed; //ambil jumlah dipinjam
-        $count = $item->stock; //ambil jumlah quantity
-        $item->update(['borrowed' => 0, 'stock' => $sum + $count]);
-        return redirect('/pinjam-pengembalian');
+        // $item = Item::where('code_item', $post->item_id);
+        // $sum = $item->borrowed; //ambil jumlah dipinjam
+        // $count = $item->stock; //ambil jumlah quantity
+        // $item->update(['borrowed' => 0, 'stock' => $sum + $count]);
+        // return redirect('/pinjam-pengembalian');
     }
 
     /**
