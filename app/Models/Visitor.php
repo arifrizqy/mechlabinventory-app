@@ -9,8 +9,8 @@ class Visitor extends Model
 {
     use HasFactory;
 
-    // protected $table = 'tb_visitor'; // prod
-    protected $table = 'tb_visitors'; // dev
+    protected $table = 'tb_visitor'; // prod
+    // protected $table = 'tb_visitors'; // dev
 
     protected $fillable = [
         'id', 'name', 'telp'
