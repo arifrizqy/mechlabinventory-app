@@ -16,7 +16,9 @@ class PinjamPengembalianController extends Controller
     {
         return view('pages.pinjam-pengembalian.pinjam-pengembalian-view', [
             'title' => 'Pinjam - Pengembalian',
-            'pinjam' => PostPinjam::Where('IsDeleted', 0)->latest()->get()
+            'pinjam' => PostPinjam::Where('IsDeleted', 0)->latest()->get(),
+            'visitor' => Visitor::Where('IsDeleted', 0)->get(),
+            'pinjamForm' => Item::where('isDeleted', 0)->where('isBorrowed', 0)->latest()->get()
         ]);
     }
 

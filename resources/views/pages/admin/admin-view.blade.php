@@ -71,7 +71,10 @@
                                             <td>{{ $adm->password }}</td>
                                             <td>
                                                 <form class="mt-1" action="{{ route('admin-list.edit', $adm->id) }}" method="GET">
-                                                    <button class="btn btn-sm btn-warning">
+                                                    <button class="btn btn-sm btn-warning btn-icon-split">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fa fa-pen" aria-hidden="true"></i>
+                                                        </span>
                                                         <span class="text">Ubah</span>
                                                     </button>
                                                 </form>

@@ -92,6 +92,9 @@
                                                     @method('put')
                                                     @csrf
                                                     <button class="btn btn-sm btn-warning btn-icon-split ms-2" onclick="return confirm(`Are you sure? 'Sudah Mengembalikan'`)">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fa fa-pen" aria-hidden="true"></i>
+                                                        </span>
                                                         <span class="text">Ubah Status</span>
                                                     </button>
 
@@ -120,7 +123,7 @@
                 <!-- End of Page Content - Form Pinjam -->
 
                 <!-- Begin Page Content - Form Pinjam -->
-                {{-- <div class="container-fluid d-none" id="FormCreateUpdate">
+                <div class="container-fluid d-none" id="FormCreateUpdate">
 
                     <!-- Page Heading -->
                     <div class="d-flex justify-content-between">
@@ -144,7 +147,7 @@
                             <form method="post" action="{{ route('pinjam-pengembalian.store') }}">
                                 @csrf
                                 <div class="row mb-3">
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         <label for="visitor" class="form-label">Nama Peminjam</label><br>
                                         <select class="custom-select" id="visitor" name="nim" required>
                                             <option value="">Pilih Visitor:</option>
@@ -153,14 +156,25 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-6">
-                                        <label for="namaBarang" class="form-label">Nama Barang</label><br>
-                                        <select class="custom-select" id="namaBarang" name="barang" required>
-                                            <option value="">Pilih Barang:</option>
-                                            @foreach ($pinjam as $pjm)
-                                            <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-7" id="barangPinjam">
+                                        <label for="namaBarang" class="form-label">Nama Barang</label>
+                                        <div class="input-group mb-3 brg-pinjam">
+                                            <select class="custom-select" name="barang" aria-label="Example select with button addon" required>
+                                                <option value="">Pilih Barang:</option>
+                                                @foreach ($pinjamForm as $pjm)
+                                                <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="input-group-append">
+                                                <input type="number" class="form-control rounded-0" value="1" name="qty" min="1" required>
+                                                <button class="btn btn-outline-info" type="button" onclick="addSelectOpt()">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                                <button class="btn btn-outline-danger" type="button" disabled>
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
@@ -175,11 +189,13 @@
                         </div>
                     </div>
 
-                </div> --}}
+                </div>
                 <!-- End of Page Content - Form Pinjam -->
 
             </div>
             <!-- End of Main Content -->
+
+            <button onclick="debug()">Console</button>
 
             <!-- Footer -->
             @include('partials.footer')
@@ -223,66 +239,105 @@
             // Di sini, Anda dapat menggunakan AJAX untuk mengambil data dari server
             // Misalnya, URL /item/detail digunakan untuk mengambil detail item berdasarkan ID
             $.ajax({
-            url: '/pinjam-pengembalian/' + itemId,
-            type: 'GET',
-            success: function(response) {
-                $('#bodyDetail').html(
-                    `<div class="d-flex">
-                            <img class="rounded shadow-sm" src="{{ asset('img/image-not-available.png') }}" alt="Image not available">
-                            <div class="w-100">
-                                <div class="d-flex">
-                                    <div class="w-100 ml-3">
-                                        <div class="row">
-                                            <div class="col-3">NIM</div>
-                                            <div class="col-1">:</div>
-                                            <div class="col-8">${response.dataVisitor.id}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-3">Nama</div>
-                                            <div class="col-1">:</div>
-                                            <div class="col-8">${response.dataVisitor.name}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-3">No. Telp.</div>
-                                            <div class="col-1">:</div>
-                                            <div class="col-8">${response.dataVisitor.telp}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-3">Status</div>
-                                            <div class="col-1">:</div>
-                                            <div class="col-8">
-                                                <div class="badge py-2 px-4 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
-                                                    <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-3">Tgl. Pinjam</div>
-                                            <div class="col-1">:</div>
-                                            <div class="col-8">${response.dataPinjam.created_at}</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-3">Barang</div>
-                                            <div class="col-1">:</div>
-                                            <div class="col-8">
-                                                <div class="row">
-                                                    <div class="col-6">Kode Brg.</div>
-                                                    <div class="col-6">Nama Brg.</div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-6">${response.dataPinjam.item_id}</div>
-                                                    <div class="col-6">${response.dataItemVisitor.description}</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                url: '/pinjam-pengembalian/' + itemId,
+                type: 'GET',
+                success: function(response) {
+                    $('#bodyDetail').html(`
+                        <div class="d-flex">
+                            <div class="row">
+                                <div class="col-3">NIM</div>
+                                <div class="col-1">:</div>
+                                <div class="col-8">${response.dataVisitor.id}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Nama</div>
+                                <div class="col-1">:</div>
+                                <div class="col-8">${response.dataVisitor.name}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">No. Telp.</div>
+                                <div class="col-1">:</div>
+                                <div class="col-8">${response.dataVisitor.telp}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Status</div>
+                                <div class="col-1">:</div>
+                                <div class="col-8">
+                                    <div class="badge py-2 px-4 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
+                                        <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>`
-                );
-            }
+                            <div class="row">
+                                <div class="col-3">Tgl. Pinjam</div>
+                                <div class="col-1">:</div>
+                                <div class="col-8">${response.dataPinjam.created_at}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">Barang</div>
+                                <div class="col-1">:</div>
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col-6">Kode Brg.</div>
+                                        <div class="col-6">Nama Brg.</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">${response.dataPinjam.item_id}</div>
+                                        <div class="col-6">${response.dataItemVisitor.description}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
             });
         };
+
+        function debug() {
+            $('.brg-pinjam').each(function() {
+                console.log($(this).children()[0].value);
+                console.log($(this).children().children()[3].value);
+            });
+        }
+
+        function randId(length) {
+            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let randomID = '';
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                randomID += charset[randomIndex];
+            }
+
+            return randomID;
+        }
+
+        function addSelectOpt() {
+            const id = randId(2);
+            $('#barangPinjam').append(`
+                <div class="input-group mb-3 brg-pinjam" id="selectOpt${id}">
+                    <select class="custom-select" name="barang" aria-label="Example select with button addon" required>
+                        <option value="">Pilih Barang:</option>
+                        @foreach ($pinjamForm as $pjm)
+                        <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-append">
+                        <input type="number" class="form-control rounded-0" value="1" name="qty" min="1" required>
+                        <button class="btn btn-outline-info" type="button" onclick="addSelectOpt()">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" type="button" onclick="removeSelectOpt('selectOpt${id}')">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function removeSelectOpt(selector) {
+            $(`#${selector}`).remove();
+        }
     </script>
 
 </body>

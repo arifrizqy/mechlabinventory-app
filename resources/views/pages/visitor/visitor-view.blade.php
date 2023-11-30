@@ -77,7 +77,10 @@
                                             <td>
                                                 <form action="{{ route('visitors.edit', $vst->id) }}" method="GET">
                                                     @csrf
-                                                    <button class="btn btn-sm btn-warning">
+                                                    <button class="btn btn-sm btn-warning btn-icon-split">
+                                                        <span class="icon text-white-50">
+                                                            <i class="fa fa-pen" aria-hidden="true"></i>
+                                                        </span>
                                                         <span class="text">Ubah</span>
                                                     </button>
 
