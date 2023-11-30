@@ -48,7 +48,6 @@
                                         <tr>
                                             <th>No.</th>
                                             <th>Nama Peminjam</th>
-                                            <th>Nama Barang</th>
                                             <th>Status</th>
                                             <th>Tgl. Pinjam</th>
                                             <th>Actions</th>
@@ -58,7 +57,6 @@
                                         <tr>
                                             <th>No.</th>
                                             <th>Nama Peminjam</th>
-                                            <th>Nama Barang</th>
                                             <th>Status</th>
                                             <th>Tgl. Pinjam</th>
                                             <th>Actions</th>
@@ -67,51 +65,56 @@
                                     <tbody>
                                         @php
                                             $i = 1;
+                                            $date = null;
                                         @endphp
                                         @foreach ($pinjam as $pjm )
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $pjm->visitor->name }}</td>
-                                            <td>{{ $pjm->item->description }}</td>
-                                            <td>
-                                                <div class="badge py-1 px-3 {{ $pjm->status == 1 ? 'bg-success' : 'bg-danger' }}">
-                                                    <span class="text-white">
-                                                        {{ $pjm->status == 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td>{{ $pjm->created_at}}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-info btn-icon-split ms-2" data-toggle="modal" data-target="#modalDetail" id="button-detail" onclick="showDetailPinjam({{ $pjm->id }})">
-                                                    <span class="icon text-white-50">
-                                                        <i class="fa fa-info" aria-hidden="true"></i>
-                                                    </span>
-                                                    <span class="text">Detail</span>
-                                                </button>
-                                                <form class="mt-1" action="{{ route('pinjam-pengembalian.update', $pjm->id) }}" method="POST">
-                                                    @method('put')
-                                                    @csrf
-                                                    <button class="btn btn-sm btn-warning btn-icon-split ms-2" onclick="return confirm(`Are you sure? 'Sudah Mengembalikan'`)">
-                                                        <span class="icon text-white-50">
-                                                            <i class="fa fa-pen" aria-hidden="true"></i>
-                                                        </span>
-                                                        <span class="text">Ubah Status</span>
-                                                    </button>
+                                            @if ($pjm->created_at != $date)
+                                                @php
+                                                    $date = $pjm->created_at;
+                                                @endphp
+                                                <tr>
+                                                    <td>{{ $i++ }}</td>
+                                                    <td>{{ $pjm->visitor->name }}</td>
+                                                    <td>
+                                                        <div class="badge py-1 px-3 {{ $pjm->status == 1 ? 'bg-success' : 'bg-danger' }}">
+                                                            <span class="text-white">
+                                                                {{ $pjm->status == 1 ? 'Sudah Kembali' : 'belum dikembalikan'; }}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ $pjm->created_at}}</td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-info btn-icon-split ms-2" data-toggle="modal" data-target="#modalDetail" id="button-detail" onclick="showDetailPinjam({{ $pjm->id }})">
+                                                            <span class="icon text-white-50">
+                                                                <i class="fa fa-info" aria-hidden="true"></i>
+                                                            </span>
+                                                            <span class="text">Detail</span>
+                                                        </button>
+                                                        <form class="mt-1" action="{{ route('pinjam-pengembalian.update', $pjm->id) }}" method="POST">
+                                                            @method('put')
+                                                            @csrf
+                                                            <button class="btn btn-sm btn-warning btn-icon-split ms-2" onclick="return confirm(`Are you sure? 'Sudah Mengembalikan'`)">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fa fa-pen" aria-hidden="true"></i>
+                                                                </span>
+                                                                <span class="text">Ubah Status</span>
+                                                            </button>
 
-                                                </form>
+                                                        </form>
 
-                                                <form class="mt-1" action="{{ route('pinjam-pengembalian.destroy', $pjm->id) }}" method="POST">
-                                                    @method('delete')
-                                                    @csrf
-                                                    <button class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm('Are you sure?')">
-                                                        <span class="icon text-white-50">
-                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                        </span>
-                                                        <span class="text">Hapus</span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                                        <form class="mt-1" action="{{ route('pinjam-pengembalian.destroy', $pjm->id) }}" method="POST">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <button class="btn btn-sm btn-danger btn-icon-split" onclick="return confirm('Are you sure?')">
+                                                                <span class="icon text-white-50">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </span>
+                                                                <span class="text">Hapus</span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

@@ -12,7 +12,7 @@ class LoginController extends Controller
     {
         return view('pages.auth.login', [
             'title' => 'Login',
-            'items' => Item::where('isDeleted', 0)->whereNotIn('qty', [0])->latest()->get()
+            'items' => Item::where('isDeleted', 0)->whereNotIn('stock', [0])->latest()->get()
         ]);
     }
 

@@ -3,6 +3,19 @@
 @section('body-content')
 <body class="bg-gradient-primary d-flex align-items-center" style="height: 100vh">
 
+    <div class="bg-info container-fluid fixed-top py-3">
+        <div class="d-flex">
+            @foreach ($items as $item)
+                <div class="card shadow mr-2" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $item->description }}</h5>
+                        <h6 class="badge badge-success py-1 px-3">Tersedia</h6> : {{ $item->stock }}
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
     <div class="container">
 
         <!-- Outer Row -->
@@ -45,13 +58,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
+    
     {{-- JavaScript - Library --}}
     @include('partials.script')
 
