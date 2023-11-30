@@ -119,13 +119,7 @@ class PinjamPengembalianController extends Controller
             DetailLoan::where('id', $idDetail)->update(['qty' => 0]);
         }
 
-
-
-        // $item = Item::where('code_item', $post->item_id);
-        // $sum = $item->borrowed; //ambil jumlah dipinjam
-        // $count = $item->stock; //ambil jumlah quantity
-        // $item->update(['borrowed' => 0, 'stock' => $sum + $count]);
-        // return redirect('/pinjam-pengembalian');
+        return redirect('/pinjam-pengembalian');
     }
 
     /**
@@ -134,11 +128,20 @@ class PinjamPengembalianController extends Controller
     public function destroy(PostPinjam $postPinjam, $id)
     {
         $post = PostPinjam::where('id', $id)->first();
+        // DetailLoan::where('loan_id', $post->id)->deleted();
+        $detail = DetailLoan::where('loan_id', $post->id)->get();
 
-        $item = Item::where('code_item', $post->item_id);
-        $sum = $item->borrowed;
-        $count = $item->stock;
-        $item->update(['borrowed' => 0, 'stock' => $sum + $count]);
+        foreach($detail as $dt){
+            $idDetail = $dt->id;
+            $jmlPinjam = $dt->qty;
+
+            $item = Item::where('code_item', $dt->item_id)->first();
+            $jmlStock = $item->stock;
+            $total = $jmlStock + $jmlPinjam;
+            $item->update(['borrowed' => 0, 'stock' => $total]);
+
+            DetailLoan::where('id', $idDetail)->delete();
+        }
 
         $post->delete();
         return redirect('/pinjam-pengembalian');
