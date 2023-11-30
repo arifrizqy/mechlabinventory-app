@@ -99,7 +99,6 @@
                                                                 </span>
                                                                 <span class="text">Ubah Status</span>
                                                             </button>
-
                                                         </form>
 
                                                         <form class="mt-1" action="{{ route('pinjam-pengembalian.destroy', $pjm->id) }}" method="POST">
@@ -260,7 +259,7 @@
             return "";
         }
 
-        $(document).ready(function() { 
+        $(document).ready(function() {
             $("#formPinjam").submit(function(e) {
                 e.preventDefault();
                 const nim = $('#visitor').val();
@@ -292,7 +291,7 @@
             const listSelectOpt = $('.brg-pinjam').get();
 
             const daftarPinjam = [];
-            
+
             listSelectOpt.forEach(element => {
                 const data = {
                     "item" : element.children[0].value,
