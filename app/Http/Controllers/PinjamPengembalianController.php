@@ -38,13 +38,12 @@ class PinjamPengembalianController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'nim' => 'required',
-        // ]);
+        $validated = $request->validate([
+            'nim' => 'required',
+        ]);
 
-        // for ($i=0; $i < ; $i++) {
         $validated['nim'] = $request->input('nim');
-        $validated['item_id'] = $request->input('barang' . $i);
+        $validated['item_id'] = $request->input('barang');
         $validated['status'] = 0;
         $validated['isDeleted'] = 0;
         // for ($i = 0; $i < $request->input('listBrgPinjam'); $i++) {
@@ -64,7 +63,6 @@ class PinjamPengembalianController extends Controller
         // }
         //     PostPinjam::create($validated);
         //     Item::where('code_item', $validated['item_id'])->update(['isBorrowed' => 1]);
-        // }
 
         return $request->input('listBrgPinjam');
 
