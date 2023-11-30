@@ -144,7 +144,9 @@
                             <h6 class="m-0 font-weight-bold text-primary">Form Pinjam</h6>
                         </div>
                         <div class="card-body">
-                            <form method="post" action="{{ route('pinjam-pengembalian.store') }}">
+                            {{-- <form method="post" action="{{ route('pinjam-pengembalian.store') }}"> --}}
+                            <form id="formPinjam">
+                                {{-- id="formPinjam" --}}
                                 @csrf
                                 <div class="row mb-3">
                                     <div class="col-5">
@@ -178,7 +180,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-sm btn-primary btn-icon-split">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-icon-split" > {{-- onclick="sendData()" --}}
                                         <span class="icon text-white-50">
                                             <i class="fa fa-paper-plane" aria-hidden="true"></i>
                                         </span>
@@ -235,6 +237,120 @@
     @include('partials.script')
 
     <script>
+        // function debug() {
+        //     console.log(localStorage.getItem("XSRF-TOKEN"));
+        // }
+
+        function getCookie(name) {
+            var cname = name + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i < ca.length; i++){
+                var c = ca[i];
+                while(c.charAt(0) == ' '){
+                    c = c.substring(1);
+                }
+                if(c.indexOf(cname) == 0){
+                    return c.substring(cname.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        $(document).ready(function() { 
+            $("#formPinjam").submit(function(e) {
+                e.preventDefault();
+                const nim = $('#visitor').val();
+                const listBrgPinjam = getBrgPinjamFromForm();
+                $.ajax({
+                    url: "{{ url('/pinjam-pengembalian') }}",
+                    type: 'post',
+                    data: {
+                        nim: nim,
+                        listBrgPinjam: listBrgPinjam
+                    },
+                    // headers: { 'X-CSRF-TOKEN': `${ getCookie('XSRF-TOKEN') }` },
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
+            });
+        });
+
+        function removeSelectOpt(selector) {
+            $(`#${selector}`).remove();
+        }
+
+        function getBrgPinjamFromForm() {
+            const listSelectOpt = $('.brg-pinjam').get();
+
+            const daftarPinjam = [];
+            
+            listSelectOpt.forEach(element => {
+                const data = {
+                    "item" : element.children[0].value,
+                    "qty" : element.children[1].children[0].value
+                }
+
+                daftarPinjam.push(data);
+            });
+
+            return daftarPinjam;
+        }
+
+        function randId(length) {
+            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let randomID = '';
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                randomID += charset[randomIndex];
+            }
+
+            return randomID;
+        }
+
+        function addSelectOpt() {
+            const id = randId(2);
+            $('#barangPinjam').append(`
+                <div class="input-group mb-3 brg-pinjam" id="selectOpt${id}">
+                    <select class="custom-select" name="barang" aria-label="Example select with button addon" required>
+                        <option value="">Pilih Barang:</option>
+                        @foreach ($pinjamForm as $pjm)
+                        <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-append">
+                        <input type="number" class="form-control rounded-0" value="1" name="qty" min="1" required>
+                        <button class="btn btn-outline-info" type="button" onclick="addSelectOpt()">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button class="btn btn-outline-danger" type="button" onclick="removeSelectOpt('selectOpt${id}')">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `);
+        }
+
+        function sendData() {
+            // const data = getBrgPinjamFromForm();
+            // $.ajax({
+            //     type: "post",
+            //     url: "{{ url('/login') }}",
+            //     data: data,
+            //     success: function (response) {
+            //         console.log("hallo")
+            //     }
+            // });
+
+            console.log("hallo");
+        }
+
         function showDetailPinjam(itemId) {
             // Di sini, Anda dapat menggunakan AJAX untuk mengambil data dari server
             // Misalnya, URL /item/detail digunakan untuk mengambil detail item berdasarkan ID
@@ -292,52 +408,6 @@
                 }
             });
         };
-
-        function debug() {
-            $('.brg-pinjam').each(function() {
-                console.log($(this).children()[0].value);
-                console.log($(this).children().children()[3].value);
-            });
-        }
-
-        function randId(length) {
-            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let randomID = '';
-
-            for (let i = 0; i < length; i++) {
-                const randomIndex = Math.floor(Math.random() * charset.length);
-                randomID += charset[randomIndex];
-            }
-
-            return randomID;
-        }
-
-        function addSelectOpt() {
-            const id = randId(2);
-            $('#barangPinjam').append(`
-                <div class="input-group mb-3 brg-pinjam" id="selectOpt${id}">
-                    <select class="custom-select" name="barang" aria-label="Example select with button addon" required>
-                        <option value="">Pilih Barang:</option>
-                        @foreach ($pinjamForm as $pjm)
-                        <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
-                        @endforeach
-                    </select>
-                    <div class="input-group-append">
-                        <input type="number" class="form-control rounded-0" value="1" name="qty" min="1" required>
-                        <button class="btn btn-outline-info" type="button" onclick="addSelectOpt()">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                        <button class="btn btn-outline-danger" type="button" onclick="removeSelectOpt('selectOpt${id}')">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `);
-        }
-
-        function removeSelectOpt(selector) {
-            $(`#${selector}`).remove();
-        }
     </script>
 
 </body>

@@ -42,15 +42,20 @@ class PinjamPengembalianController extends Controller
         //     'nim' => 'required',
         // ]);
 
-        $validated['nim_or_nip'] = $request->input('nim');
-        $validated['item_id'] = $request->input('barang');
-        $validated['status'] = 0;
-        $validated['isDeleted'] = 0;
+        // for ($i = 0; $i < $request->input('listBrgPinjam'); $i++) {
+        //     $validated['nim_or_nip'] = $request->input('nim');
+        //     $validated['item_id'] = $request->input('listBrgPinjam')[$i]["item"];
+        //     // $validated['qty'] = $request->input('listBrgPinjam')[$i]["qty"];
+        //     $validated['status'] = 0;
+        //     $validated['isDeleted'] = 0;
 
-        PostPinjam::create($validated);
-        Item::where('code_item', $validated['item_id'])->update(['isBorrowed' => 1]);
+        //     PostPinjam::create($validated);
+        //     Item::where('code_item', $validated['item_id'])->update(['isBorrowed' => 1]);
+        // }
 
-        return redirect('/pinjam-pengembalian');
+        return $request->input('listBrgPinjam');
+
+        // return redirect('/pinjam-pengembalian');
     }
 
     /**
