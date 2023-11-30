@@ -20,19 +20,19 @@
                 @include('partials.topbar')
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <!-- Begin Page Content - Table -->
+                <div class="container-fluid" id="TableData">
 
                     <!-- Page Heading -->
                     <div class="d-flex justify-content-between">
                         <h1 class="h3 mb-4 text-gray-800">Admin List</h1>
                         <div>
-                            <a href="admin-list/create" class="btn btn-primary btn-icon-split">
+                            <button type="button" class="btn btn-primary btn-icon-split" onclick="showForm()">
                                 <span class="icon text-white-50">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </span>
                                 <span class="text">Tambah Admin</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -94,7 +94,56 @@
                         </div>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of Page Content - Table -->
+
+                <!-- Begin Page Content - Form -->
+                <div class="container-fluid d-none" id="FormCreateUpdate">
+
+                    <!-- Page Heading -->
+                    <div class="d-flex justify-content-between">
+                        <h1 class="h3 mb-4 text-gray-800">Form Admin</h1>
+                        <div>
+                            <button type="button" class="btn btn-danger btn-icon-split" onclick="hideForm()">
+                                <span class="icon text-white-50">
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                </span>
+                                <span class="text">Kembali</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Form Admin</h6>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="{{ route('admin-list.store') }}">
+                                @csrf
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username" required>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password" required>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="text">Simpan</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- End of Page Content - Form -->
 
             </div>
             <!-- End of Main Content -->

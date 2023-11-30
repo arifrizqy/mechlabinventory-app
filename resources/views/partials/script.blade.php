@@ -14,3 +14,20 @@
 
 <!-- Page level custom scripts -->
 <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+
+<script>
+   $('document').ready(function() {
+       hideForm();
+       $('#FormCreateUpdate').removeClass('d-none');
+   });
+
+   function showForm() {
+       $('#TableData').hide();
+       $('#FormCreateUpdate').show();
+   }
+
+   function hideForm() {
+       $('#FormCreateUpdate').hide();
+       $('#TableData').show();
+   }
+</script>

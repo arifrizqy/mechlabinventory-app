@@ -20,19 +20,19 @@
                 @include('partials.topbar')
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <!-- Begin Page Content - Table Pinjam -->
+                <div class="container-fluid" id="TableData">
 
                     <!-- Page Heading -->
                     <div class="d-flex justify-content-between">
                         <h1 class="h3 mb-4 text-gray-800">Pinjam &amp; Pengembalian</h1>
                         <div>
-                            <a href="/pinjam-pengembalian/create" class="btn btn-primary btn-icon-split">
+                            <button type="button" class="btn btn-primary btn-icon-split" onclick="showForm()">
                                 <span class="icon text-white-50">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                 </span>
                                 <span class="text">Pinjam Barang</span>
-                            </a>
+                            </button>
                         </div>
                     </div>
 
@@ -117,7 +117,66 @@
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
+                <!-- End of Page Content - Form Pinjam -->
+
+                <!-- Begin Page Content - Form Pinjam -->
+                {{-- <div class="container-fluid d-none" id="FormCreateUpdate">
+
+                    <!-- Page Heading -->
+                    <div class="d-flex justify-content-between">
+                        <h1 class="h3 mb-4 text-gray-800">Form Peminjaman Barang</h1>
+                        <div>
+                            <button type="button" class="btn btn-danger btn-icon-split" onclick="hideForm()">
+                                <span class="icon text-white-50">
+                                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                                </span>
+                                <span class="text">Kembali</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Form Pinjam</h6>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="{{ route('pinjam-pengembalian.store') }}">
+                                @csrf
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <label for="visitor" class="form-label">Nama Peminjam</label><br>
+                                        <select class="custom-select" id="visitor" name="nim" required>
+                                            <option value="">Pilih Visitor:</option>
+                                            @foreach ($visitor as $vst)
+                                            <option value="{{ $vst->id }}">{{ $vst->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="namaBarang" class="form-label">Nama Barang</label><br>
+                                        <select class="custom-select" id="namaBarang" name="barang" required>
+                                            <option value="">Pilih Barang:</option>
+                                            @foreach ($pinjam as $pjm)
+                                            <option value="{{$pjm->code_item }}">{{ $pjm->description }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-sm btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                                        </span>
+                                        <span class="text">Simpan</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div> --}}
+                <!-- End of Page Content - Form Pinjam -->
 
             </div>
             <!-- End of Main Content -->
