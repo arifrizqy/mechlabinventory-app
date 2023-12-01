@@ -257,9 +257,6 @@
                                             <div class="col-1">:</div>
                                             <div class="col-8">${response.itemDetail.stock}</div>
                                         </div>
-
-
-
                                     </div>
                                 </div>
                             </div>
