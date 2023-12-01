@@ -17,7 +17,7 @@ class PinjamPengembalianController extends Controller
     {
         return view('pages.pinjam-pengembalian.pinjam-pengembalian-view', [
             'title' => 'Pinjam - Pengembalian',
-            'pinjam' => PostPinjam::Where('IsDeleted', 0)->latest()->get(),
+            'pinjam' => PostPinjam::Where('IsDeleted', 0)->get(),
             'visitor' => Visitor::Where('IsDeleted', 0)->get(),
             'pinjamForm' => Item::where('isDeleted', 0)->whereNotIn('stock', [0])->latest()->get()
         ]);
@@ -43,31 +43,40 @@ class PinjamPengembalianController extends Controller
             'nim' => 'required',
         ]);
 
-        $validated['nim'] = $request->input('nim');
-        $validated['item_id'] = $request->input('barang');
+        $totalBarangDipinjam = count($request->input('listBrgPinjam'));
+
+        $validated['id'] = $request->input('idPinjam');
+        $validated['nim_or_nip'] = $request->input('nim');
         $validated['status'] = 0;
         $validated['isDeleted'] = 0;
-        // for ($i = 0; $i < $request->input('listBrgPinjam'); $i++) {
-        //     $validated['nim_or_nip'] = $request->input('nim');
-        //     $validated['item_id'] = $request->input('listBrgPinjam')[$i]["item"];
-        //     // $validated['stock'] = $request->input('listBrgPinjam')[$i]["stock"];
-        //     $validated['status'] = 0;
-        //     $validated['isDeleted'] = 0;
-
         PostPinjam::create($validated);
 
+        $result = PostPinjam::where('id', $validated['id'])->first();
 
+        for ($i = 0; $i < $totalBarangDipinjam; $i++) {
+            $validated['loan_id'] = $result->id;
+            $validated['item_id'] = $request->input('listBrgPinjam')[$i]["item"];
+            $validated['qty'] = $request->input('listBrgPinjam')[$i]["qty"];
 
-        $item = Item::where('code_item', $validated['item_id']);
-        $total = $item->stock;
-        // $item->update(['borrowed' => $pinjam, 'stock' => $total - $pinjam]);
-        // }
-        //     PostPinjam::create($validated);
-        //     Item::where('code_item', $validated['item_id'])->update(['isBorrowed' => 1]);
+            DetailLoan::create($validated);
+        }
 
-        return $request->input('listBrgPinjam');
+        $validated = [];
 
-        // return redirect('/pinjam-pengembalian');
+        for ($i = 0; $i < $totalBarangDipinjam; $i++) {
+            $item = Item::where('code_item', $request->input('listBrgPinjam')[$i]["item"])->first();
+
+            $stok_tersedia = $item->stock;
+            $stok_dipinjam = $item->borrowed;
+
+            $validated['code_item'] = $item->id;
+            $validated['borrowed'] = $stok_dipinjam + $request->input('listBrgPinjam')[$i]["qty"];
+            $validated['stock'] = $stok_tersedia - $validated['borrowed'];
+
+            Item::where('id', $validated['code_item'])->update($validated);
+        }
+
+        return redirect('/pinjam-pengembalian');
     }
 
     /**
@@ -77,13 +86,17 @@ class PinjamPengembalianController extends Controller
     {
         $dataPinjam = PostPinjam::where('id', $id)->first();
         $dataVisitor = Visitor::where('id', $dataPinjam->nim_or_nip)->first();
-        $dataDetail = DetailLoan::where('loan_id', $dataPinjam->id)->latest()->get();
+        $dataDetail = DetailLoan::where('loan_id', $dataPinjam->id)->get();
 
+        for ($i = 0; $i < count($dataDetail); $i++) {
+            $dataBarangDipinjam[$i] = Item::where('code_item', $dataDetail[$i]->item_id)->first();
+        }
 
         return array(
             'dataVisitor' => $dataVisitor,
-            // 'dataItemVisitor' => $dataItem,
+            'dataPinjam' => $dataPinjam,
             'dataDetail' => $dataDetail,
+            'dataBrg' => $dataBarangDipinjam,
         );
     }
 

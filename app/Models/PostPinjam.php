@@ -9,11 +9,11 @@ class PostPinjam extends Model
 {
     use HasFactory;
 
-
     protected $table = 'log_loan_return';
     protected $guarded = 'id';
-    protected $fillable = ['nim_or_nip', 'status', 'isDeleted']; // prod
-    // protected $fillable = ['nim', 'item_id', 'status', 'isDeleted']; // dev
+    protected $fillable = ['id', 'nim_or_nip', 'status', 'isDeleted']; // prod
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     public function visitor()
     {
@@ -21,7 +21,7 @@ class PostPinjam extends Model
         // return $this->belongsTo(Visitor::class, 'nim'); // dev
     }
 
-    public function detai()
+    public function detail()
     {
         return $this->belongsTo(detail::class, 'nim_or_nip');
     }

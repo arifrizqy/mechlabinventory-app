@@ -84,7 +84,7 @@
                                                     </td>
                                                     <td>{{ $pjm->created_at}}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-info btn-icon-split ms-2" data-toggle="modal" data-target="#modalDetail" id="button-detail" onclick="showDetailPinjam({{ $pjm->id }})">
+                                                        <button type="button" class="btn btn-sm btn-info btn-icon-split ms-2" data-toggle="modal" data-target="#modalDetail" id="button-detail" onclick="showDetailPinjam('{{ $pjm->id }}')">
                                                             <span class="icon text-white-50">
                                                                 <i class="fa fa-info" aria-hidden="true"></i>
                                                             </span>
@@ -239,42 +239,32 @@
     @include('partials.script')
 
     <script>
-        // function debug() {
-        //     console.log(localStorage.getItem("XSRF-TOKEN"));
-        // }
-
-        function getCookie(name) {
-            var cname = name + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(';');
-            for(var i = 0; i < ca.length; i++){
-                var c = ca[i];
-                while(c.charAt(0) == ' '){
-                    c = c.substring(1);
-                }
-                if(c.indexOf(cname) == 0){
-                    return c.substring(cname.length, c.length);
-                }
-            }
-            return "";
-        }
-
         $(document).ready(function() {
+            // $.ajax({
+            //     type: "get",
+            //     url: "{{ url('/pinjam-pengembalian') }}",
+            //     success: function (response) {
+            //         console.log(response);
+            //     }
+            // });
+
             $("#formPinjam").submit(function(e) {
                 e.preventDefault();
+                const idPinjam = randId(5);
                 const nim = $('#visitor').val();
                 const listBrgPinjam = getBrgPinjamFromForm();
                 $.ajax({
                     url: "{{ url('/pinjam-pengembalian') }}",
                     type: 'post',
                     data: {
+                        idPinjam: idPinjam,
                         nim: nim,
                         listBrgPinjam: listBrgPinjam
                     },
-                    // headers: { 'X-CSRF-TOKEN': `${ getCookie('XSRF-TOKEN') }` },
                     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                     success: function(response) {
                         console.log(response);
+                        location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.log(xhr.responseText);
@@ -283,8 +273,16 @@
             });
         });
 
-        function removeSelectOpt(selector) {
-            $(`#${selector}`).remove();
+        function randId(length) {
+            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let randomID = '';
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                randomID += charset[randomIndex];
+            }
+
+            return randomID;
         }
 
         function getBrgPinjamFromForm() {
@@ -304,16 +302,8 @@
             return daftarPinjam;
         }
 
-        function randId(length) {
-            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let randomID = '';
-
-            for (let i = 0; i < length; i++) {
-                const randomIndex = Math.floor(Math.random() * charset.length);
-                randomID += charset[randomIndex];
-            }
-
-            return randomID;
+        function removeSelectOpt(selector) {
+            $(`#${selector}`).remove();
         }
 
         function addSelectOpt() {
@@ -339,32 +329,21 @@
             `);
         }
 
-        function sendData() {
-            // const data = getBrgPinjamFromForm();
-            // $.ajax({
-            //     type: "post",
-            //     url: "{{ url('/login') }}",
-            //     data: data,
-            //     success: function (response) {
-            //         console.log("hallo")
-            //     }
-            // });
-
-            console.log("hallo");
-        }
-
         function showDetailPinjam(itemId) {
-            // Di sini, Anda dapat menggunakan AJAX untuk mengambil data dari server
-            // Misalnya, URL /item/detail digunakan untuk mengambil detail item berdasarkan ID
             $.ajax({
                 url: '/pinjam-pengembalian/' + itemId,
                 type: 'GET',
                 success: function(response) {
+                    console.log(response);
+                    let no = 0;
+                    const dataBrgDiPinjam = response.dataBrg;
+                    const dataDetailBrg = response.dataDetail;
+
                     $('#bodyDetail').html(`
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-3">NIM</div> :
-                                <div class="col-8">${response.dataVisitor.id}</div>
+                                <div class="col-8">${response.dataPinjam.nim_or_nip}</div>
                             </div>
                             <div class="row">
                                 <div class="col-3">Nama</div> :
@@ -379,6 +358,14 @@
                                 <div class="col-8">${response.dataPinjam.created_at}</div>
                             </div>
                             <div class="row">
+                                <div class="col-3">Status</div> :
+                                <div class="col-8">
+                                    <div class="badge py-1 px-3 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
+                                        <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-3">Barang</div> :
                             </div>
                             <table class="table mt-2">
@@ -388,25 +375,30 @@
                                         <th scope="col">Kode Brg.</th>
                                         <th scope="col">Nama Barang</th>
                                         <th scope="col">Qty.</th>
-                                        <th scope="col">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>${response.dataItemVisitor.code_item}</td>
-                                        <td>${response.dataItemVisitor.description}</td>
-                                        <td>3</td>
-                                        <td>
-                                            <div class="badge py-1 px-3 ${response.dataPinjam.status == 1 ? 'bg-success' : 'bg-danger'}">
-                                                <span class="text-white">${response.dataPinjam.status == 1 ? 'Sudah Dikembalikan' : 'Belum Dikembalikan'}</span>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tbody id="detailBrgDiPinjam">
                                 </tbody>
                             </table>
                         </div>
                     `);
+
+                    dataBrgDiPinjam.forEach(brg => {
+                        $('#detailBrgDiPinjam').append(`
+                            <tr>
+                                <th scope="row">${++no}</th>
+                                <td>${brg.code_item}</td>
+                                <td>${brg.description}</td>
+                                <td id="qtyPinjam${brg.code_item}"></td>
+                            </tr>
+                        `);
+                    });
+
+                    dataDetailBrg.forEach(detail => {
+                        $(`#qtyPinjam${detail.item_id}`).append(`
+                            <span>${detail.qty}</span>
+                        `);
+                    });
                 }
             });
         };
