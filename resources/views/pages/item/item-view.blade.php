@@ -77,7 +77,7 @@
                                                 <div>
                                                     <span class="badge py-1 px-3 text-white bg-success }}">
                                                         Tersedia
-                                                    </span> : {{ $itm->qty }}
+                                                    </span> : {{ $itm->stock }}
                                                 </div>
                                                 <div>
                                                     <span class="badge py-1 px-3 text-white {{ $itm->borrowed > 0 ? 'd-none' : 'bg-info' }}">
@@ -166,7 +166,7 @@
                                     </div>
                                     <div class="col-3">
                                         <label for="nama" class="form-label">Stock</label>
-                                        <input type="number" class="form-control" name="qty" id="nama" >
+                                        <input type="number" class="form-control" name="stock" id="nama" >
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
@@ -255,11 +255,8 @@
                                         <div class="row">
                                             <div class="col-3">Stok Barang</div>
                                             <div class="col-1">:</div>
-                                            <div class="col-8">${response.itemDetail.qty}</div>
+                                            <div class="col-8">${response.itemDetail.stock}</div>
                                         </div>
-
-
-
                                     </div>
                                 </div>
                             </div>

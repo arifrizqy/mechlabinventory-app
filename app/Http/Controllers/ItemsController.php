@@ -37,7 +37,7 @@ class ItemsController extends Controller
             'id' => 'required',
             'image' => 'required|file|mimes:jpg,jpeg,png|max:5120',
             'description' => 'required',
-            'qty' => 'required',
+            'stock' => 'required',
         ]);
 
         //upload image
@@ -53,7 +53,7 @@ class ItemsController extends Controller
             $item->code_item = $request->id;
             $item->image = $image->hashName();
             $item->isDeleted = 0;
-            $item->qty= $request->qty;
+            $item->stock= $request->stock;
             $item->borrowed = 0;
             $item->save();
         } else {
@@ -64,7 +64,7 @@ class ItemsController extends Controller
                 'code_item' => $request->id,
                 'image' => $image->hashName(),
                 'isDeleted' => 0,
-                'qty' => $request->qty,
+                'stock' => $request->stock,
                 'borrowed' => 0,
             ]);
         }
@@ -103,7 +103,7 @@ class ItemsController extends Controller
             'image' => 'file|mimes:jpg,jpeg,png|max:5120',
             'id' => 'required',
             'description' => 'required',
-            'qty' => 'required',
+            'stock' => 'required',
         ]);
 
         $item = Item::firstOrNew(['id' => $validated['id']]);
@@ -117,13 +117,13 @@ class ItemsController extends Controller
             $item->description = $validated['description'];
             $item->code_item = $request->input('id');
             $item->image =  $image->hashName();
-            $item->qty= $validated['qty'];
+            $item->stock= $validated['stock'];
             $item->save();
 
         } else {
             $item->description = $validated['description'];
             $item->code_item = $request->input('id');
-            $item->qty= $validated['qty'];
+            $item->stock= $validated['stock'];
             $item->save();
         }
 

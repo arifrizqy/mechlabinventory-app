@@ -236,7 +236,7 @@
                                     </div>
                                     <div class="col-3">
                                         <label for="nama" class="form-label">Stock</label>
-                                        <input type="number" class="form-control" name="qty" id="nama" value="{{ $item->qty }}">
+                                        <input type="number" class="form-control" name="stock" id="nama" value="{{ $item->stock }}">
                                     </div>
 
                                 </div>
